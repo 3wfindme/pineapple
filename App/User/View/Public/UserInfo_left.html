@@ -1,0 +1,12 @@
+	<div class="col-left col-1 left-memu">
+        	<h5 class="title">{:L('account_manage')}</h5>
+            <ul>
+                <li <if condition="CONTROLLER_NAME eq 'UserInfo' && ACTION_NAME eq 'index'"> class="on"</if>><a href="{:U('User/UserInfo/index')}"><img src="__IMG__/icon/lightbulb.png" width="16" /> {:L('memberinfo')}</a></li>
+                <li <if condition="CONTROLLER_NAME eq 'UserInfo' && ACTION_NAME eq 'info'"> class="on"</if>><a href="{:U('User/UserInfo/info')}"><img src="__IMG__/icon/user_edit.png" width="16" /> {:L('modify').L('memberinfo')}</a></li>
+                <li <if condition="CONTROLLER_NAME eq 'UserInfo' && ACTION_NAME eq 'avatar'"> class="on"</if>><a href="{:U('User/UserInfo/avatar')}"><img src="__IMG__/icon/vcard.png" width="16" /> {:L('modify').L('avatar')}</a></li>
+				<li <if condition="CONTROLLER_NAME eq 'UserInfo' && ACTION_NAME eq 'password'"> class="on"</if>><a href="{:U('User/UserInfo/password')}"><img src="__IMG__/icon/icon_key.gif" width="16" height="16" /> {:L('modify').L('email')}/{:L('password')}</a></li>
+				<li <if condition="CONTROLLER_NAME eq 'UserInfo' && ACTION_NAME eq 'upgrade'"> class="on"</if>><a href="{:U('User/UserInfo/upgrade')}"><img src="__IMG__/icon/Upload.png" />&nbsp;&nbsp;{:L('member').L('allowupgrade')}</a></li>
+				<li <if condition="CONTROLLER_NAME eq 'UserInfo' && ACTION_NAME eq 'phone'"> class="on"</if>><a href="{:U('User/UserInfo/phone')}"><img src="__IMG__/icon/mobile_phone.png" /> {:L('change_mobile')}</a></li>
+            </ul>
+        <span class="o1"></span><span class="o2"></span><span class="o3"></span><span class="o4"></span>
+    </div>

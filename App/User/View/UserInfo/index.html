@@ -1,0 +1,72 @@
+<extend name="Public/base"/>
+<block name="body">
+<div id="memberArea">
+<include file="Public:UserInfo_left" />
+    <div class="col-auto">
+    	<div class="col-auto">
+        	<div class="col-1 member-info">
+            	<div class="content">
+                    <div class="col-left himg">
+					<a title="{:L('modify').L('avatar')}" href="index.php?m=member&c=index&a=account_manage_avatar&t=1"><img src="{$avatar[90]}" width="60" height="60" onerror="this.src='__IMG__/member/nophoto.gif'"></a>
+					</div>
+                  <div class="col-auto">
+                   	<h5>
+					<font color="{$grouplist[$memberinfo[groupid]]['usernamecolor']}">
+					{$UserInfo['nickname']}
+					</font>
+					({$UserInfo['email']})
+					</h5>
+                    <p class="blue">
+					  {:L('member_group')}：{$UserInfo['group_title']}，
+                      {:L('account_remain')}：<font style="color:#F00; font-size:22px;font-family:Georgia,Arial; font-weight:700">{$UserInfo['amount']}</font> {:L('unit_yuan')}，{:L('point')}：<font style="color:#F00; font-size:12px;font-family:Georgia,Arial; font-weight:700">{$UserInfo['point']}</font> {:L('unit_point')} <if condition="$UserInfo['vip'] gt 0">，vip{:L('overduedate')}：<font style="color:#F00; font-size:12px;font-family:Georgia,Arial; font-weight:700">{:date($UserInfo['overduedate'])}</font></if>
+                      </p>
+                    </div>
+           	  </div>
+
+            	<span class="o1"></span><span class="o2"></span><span class="o3"></span><span class="o4"></span>
+            </div>
+            <div class="bk10"></div>	
+	<div class="col-1 ">
+		<h5 class="title">{:L('more_configuration')}：</h5>
+		<div class="content">
+				<table width="100%" cellspacing="0" class="table_form">
+					<tr>
+						<th width="120">{:L('username')}：</th>        
+						<td>{$UserInfo['username']}</td>
+					</tr>
+					<tr>
+						<th width="120">{:L('nickname')}：</th>        
+						<td>{$UserInfo['nickname']}</td>
+					</tr>
+					<tr>
+						<th width="120">{:L('in_model')}：</th>        
+						<td>{$member_model[$memberinfo['modelid']]['name']}</td>
+					</tr>
+					<tr>
+						<th width="120">{:L('regtime')}：</th>        
+						<td>{:date('Y-m-d H:i:s',$UserInfo['create_time'])}</td>
+					</tr>
+					<tr>
+						<th width="120">{:L('lastlogintime')}：</th>        
+						<td>{:date('Y-m-d H:i:s',$UserInfo['last_login_time'])}</td>
+					</tr>
+					<tr>
+						<th width="120">{:L('regip')}：</th>        
+						<td>{$UserInfo['regip']}</td>
+					</tr>
+					<tr>
+						<th width="120">{:L('lastip')}：</th>        
+						<td>{$UserInfo['last_login_ip']}</td>
+					</tr>
+					<tr>
+						<th width="120">{:L('mp')}：</th>        
+						<td style="color:#ff6600;"><notempty name="$UserInfo['phone']"><strong>{:substr($UserInfo['phone'],0,3)}****{:substr($UserInfo['phone'],-4)}</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="更换手机" class="button" onclick="window.location.href='{:U('User/UserInfo/phone')}'"><else /><input type="button" value="绑定手机" class="button" onclick="window.location.href='{:U('User/UserInfo/phone')}'"></notempty></td>
+					</tr>
+				</table>
+		</div>
+	</div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</block>

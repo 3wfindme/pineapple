@@ -1,0 +1,504 @@
+<include file="Public:_public_header_start"/>
+<include file="Public:_public_header_end"/>
+
+<div class="page pg-demo">
+    <div data-backend-compiled="" id="demo-view">
+        <header class="am-header am-header-none am-no-layout am-header-search am-box-shadow" data-am-widget="header">
+            <div class="am-header-left am-header-nav am-text-default"><a class="" href="/"> <i
+                    class="am-text-default am-icon-home am-header-icon-size"></i></a></div>
+            <h1 class="am-header-title am-index-search" id="showSearch"><i class="am-icon-search am-header-icon-size"></i> 搜索 <i
+                    class="am-icon-angle-down" id="search_arrow"></i></h1>
+
+            <div class="am-header-right am-header-nav am-text-default"><a class="" href="{:U('Mobile/User/index')}"><i
+                    class="am-text-default am-icon-user am-header-icon-size"></i></a></div>
+        </header>
+        <div class="am-index-search-form" id="search_form">
+            <input type="text" placeholder="输入关键词" name="keywords" id="keywords" class=""><a href="javascript:;"
+                                                                                             class="am-icon-search" id="search"></a>
+        </div>
+        <div class="am-g am-g-collapse am-index-content">
+            <div class="am-u-sm-4 am-index-left" id="goods-category">
+                <ul class="am-nav am-nav-list">
+                    <volist name="category_list" id="cl" key="k">
+                        <a data-am-collapse="{parent: '#goods-category'}" href="#gc-children-{$k}" class="am-active"
+                           style="font-weight: bold;">
+                            <li>{$cl.name} <i class="am-icon-angle-down"></i></li>
+                        </a>
+
+                        <div class="" id="gc-children-{$k}">
+                            <volist name="cl['children']" id="clc" key="kk">
+                                <if condition="$kk eq 1 && $k eq 1 && $_GET['keywords'] eq ''">
+                                    <a href="javascript:;" clc="{$clc.id}" class="am-a-active am-gc-children ch-id">
+                                        <li>{$clc.name}</li>
+                                    </a>
+                                    <else/>
+                                    <a href="javascript:;" clc="{$clc.id}" class="am-a-active ch-id">
+                                        <li>{$clc.name}</li>
+                                    </a>
+                                </if>
+                            </volist>
+                        </div>
+                    </volist>
+                </ul>
+            </div>
+            <div class="am-u-sm-8 am-p-sm am-index-right">
+
+
+
+                <div id="clc0"
+                <if condition="$_GET['keywords']">style="display:block;"
+                    <else/>
+                    style="display:none;"
+                </if>
+                >
+                <!--<div class="am-c-title">{$clll.name}</div>-->
+                <if condition="count($search_list) gt 0">
+                    <ul class="am-nav am-goods-list">
+                        <volist name="search_list" id="g">
+                            <li>
+                                <div class="am-g am-g-collapse am-goods-img">
+                                    <div class="am-u-sm-9 am-t-c">
+                                        <img src="{$g.url}" width="120px" width="68px"/>
+                                    </div>
+                                    <input type="hidden" id="goods-id-{$g.id}" value="0">
+
+                                    <div class="am-goods-num goods-num-{$g.id}">0</div>
+                                    <div class="am-u-sm-3 am-sel-goods am-t-c">
+                                        <div class="add add-goods" goods_id="{$g.id}" goods_name="{$g.name}"
+                                             goods_price="{$g.price}">+
+                                        </div>
+                                        <div class="cut cut-goods" goods_id="{$g.id}" goods_name="{$g.name}"
+                                             goods_price="{$g.price}">-
+                                        </div>
+                                    </div>
+                                </div>
+                                <h2>{$g.name}</h2>
+                                <small style="color:red;">{$g.price}元</small>
+                                <small>/{$g.init}</small>
+                            </li>
+                        </volist>
+                    </ul>
+                    <else/>
+                    <p>没有查询到任何商品!</p>
+                </if>
+            </div>
+
+
+                <volist name="category_list" id="cll" key="kk">
+                    <volist name="cll['children']" id="clll" key="k">
+                        <div id="clc{$clll.id}"
+                        <if condition="$k eq 1 && $kk eq 1 && $_GET['keywords'] eq ''">style="display:block;"
+                            <else/>
+                            style="display:none;"
+                        </if>
+                        >
+                        <!--<div class="am-c-title">{$clll.name}</div>-->
+                        <if condition="count($clll['goods']) gt 0">
+                            <ul class="am-nav am-goods-list">
+                                <volist name="clll['goods']" id="g">
+                                    <li>
+                                        <div class="am-g am-g-collapse am-goods-img">
+                                            <div class="am-u-sm-9 am-t-c">
+                                                <img src="{$g.url}" width="120px" width="68px"/>
+                                            </div>
+                                            <input type="hidden" id="goods-id-{$g.id}" value="0">
+
+                                            <div class="am-goods-num goods-num-{$g.id}">0</div>
+                                            <div class="am-u-sm-3 am-sel-goods am-t-c">
+                                                <div class="add add-goods" goods_id="{$g.id}" goods_name="{$g.name}"
+                                                     goods_price="{$g.price}">+
+                                                </div>
+                                                <div class="cut cut-goods" goods_id="{$g.id}" goods_name="{$g.name}"
+                                                     goods_price="{$g.price}">-
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h2>{$g.name}</h2>
+                                        <small style="color:red;">{$g.price}元</small>
+                                        <small>/{$g.init}</small>
+                                    </li>
+                                </volist>
+                            </ul>
+                            <else/>
+                            <p>没有查询到任何商品!</p>
+                        </if>
+            </div>
+            </volist>
+            </volist>
+        </div>
+    </div>
+    <div class="am-middle-cover"></div>
+    <div class="am-middle-padding"></div>
+    <div class="am-g am-index-footer">
+        <div class="am-cart-circle" id="cart-button" is-open="0">
+            <div class="am-cat-num" id="cart-num">0</div>
+        </div>
+        <span class="am-cart-clear">清空购物车</span>
+
+        <div class="am-cart-list">
+            <div class="am-cart-list-content">
+                <table style="width: 100%;" class="cart-goods">
+
+                </table>
+            </div>
+        </div>
+        <div class="am-cart-footer">
+            <div class="am-u-sm-8 am-index-cart">
+                <span id="cart-total-price">购物车是空的<br>快快选购吧</span>
+            </div>
+            <div class="am-u-sm-4 am-t-r am-index-footer-right">
+                <button class="am-btn am-btn-sel-good" type="button">选好了</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<input type="hidden" value="0" id="total_price">
+<input type="hidden" id="load_goods_list" value="{:U('Mobile/Index/loadCartGoodsList')}">
+<input type="hidden" id="confirmOrderUrl" value="{:U('Mobile/Order/confirm')}">
+<input type="hidden" id="search_url" value="{:U('Mobile/Index/index')}">
+<include file="Public:_public_footer_start"/>
+<script src="__STATIC__/AmazeUI/js/jquery.cookie.js"></script>
+<script>
+    /* 搜索弹出 */
+    $("#showSearch").click(function () {
+        if ($("#search_arrow").hasClass('am-icon-angle-down')) {
+            $("#search_form").show();
+            $("#search_arrow").removeClass("am-icon-angle-down");
+            $("#search_arrow").addClass("am-icon-angle-up");
+        } else {
+            $("#search_form").hide();
+            $("#search_arrow").removeClass("am-icon-angle-up");
+            $("#search_arrow").addClass("am-icon-angle-down");
+        }
+    });
+    /* 菜单hover切换 */
+    $(".sel-c").click(function () {
+        $(this).children('li').addClass('am-active');
+        $(this).siblings().children('li').removeClass('am-active');
+    });
+
+    /* 商品分类折叠 */
+    $('#goods-category').on('open.collapse.amui', function () {
+        var lii = $(this).children().find('i');
+        $(lii).removeClass('am-icon-angle-up');
+        $(lii).addClass('am-icon-angle-down');
+    }).on('close.collapse.amui', function () {
+        var lii = $(this).children().find('i');
+        $(lii).removeClass('am-icon-angle-down');
+        $(lii).addClass('am-icon-angle-up');
+    });
+
+    /* 显示所属分类商品 */
+    $(".ch-id").click(function () {
+        var clc = $(this).attr('clc');
+        $(".ch-id").removeClass('am-gc-children');
+        $(this).addClass('am-gc-children');
+        $("#clc" + clc).show();
+        $("#clc" + clc).siblings().hide();
+    });
+
+    /* 购物车弹出 */
+    $("#cart-button").click(function () {
+        var is_open = $(this).attr('is-open');
+        if (parseInt($("#cart-num").html()) == 0 && is_open != 1) {
+            return false;
+        }
+        if (is_open == '1') {
+            $(this).animate({
+                bottom: '0rem'
+            }, 300);
+            $(".am-cart-list").animate({
+                bottom: '-16rem'
+            }, 300);
+            $(".am-cart-clear").animate({
+                bottom: '4rem'
+            }, 300);
+            setTimeout(function () {
+                $(".am-middle-cover").hide();
+                $('.am-middle-padding').hide();
+                $(".am-cart-list").hide();
+                $(".am-cart-clear").hide();
+            }, 300);
+            $(this).attr('is-open', 0);
+        } else {
+            $(".am-middle-cover").show();
+            $(".am-cart-list").show().animate({
+                bottom: '4rem'
+            }, 300);
+            $(".am-cart-clear").show().animate({
+                bottom: '23.4rem'
+            }, 300);
+            $(this).animate({
+                bottom: '22.8rem'
+            }, 300);
+            setTimeout(function () {
+                $('.am-middle-padding').show().animate({
+                    'border-width': '0.8rem'
+                }, 300);
+            }, 100);
+            $(this).attr('is-open', 1);
+        }
+    });
+
+    /* 更新总数 */
+    function updateTotal(price, nums, type) {
+        var total_price = $("#total_price").val();
+        if (type == 'add') {
+            var new_total_price = accAdd(total_price, accMul(price, nums));
+            $("#cart-num").html(parseInt($("#cart-num").html()) + parseInt(nums));
+        } else {
+            var new_total_price = accSub(total_price, accMul(price, nums));
+            var currentNums = parseInt($("#cart-num").html()) - parseInt(nums);
+            if (currentNums <= 0) {
+                currentNums = 0;
+            }
+            $("#cart-num").html(currentNums);
+        }
+        //查询品类总数
+        $("#total_price").val(new_total_price);
+        if ($("#cart-num").html() > 0) {
+            $("#cart-total-price").html('总价: ' + new_total_price + '元<br/>品类数: ' + $(".cart-goods").find('tr').length);
+        } else {
+            $("#cart-total-price").html('购物车是空的<br>快快选购吧');
+        }
+    }
+
+    /* 调整商品加减 */
+    $(".add-goods").click(function () {
+        var goods_id = $(this).attr('goods_id');
+        var goods_name = $(this).attr('goods_name');
+        var goods_price = $(this).attr('goods_price');
+        var currentNums = parseInt($('#goods-id-' + goods_id).val()) + 1;
+        if (currentNums > 0) {
+            $(".goods-num-" + goods_id).show().html(currentNums);
+            $('#goods-id-' + goods_id).val(currentNums);
+            updateCartGoodsList(goods_id, goods_name, goods_price, 1, 'add');
+            updateTotal(goods_price, 1, 'add');
+        }
+
+    });
+    /* 商品列表点击减少商品 */
+    $(".cut-goods").click(function () {
+        var goods_id = $(this).attr('goods_id');
+        console.log($('#goods-id-' + goods_id).val());
+
+        var goods_name = $(this).attr('goods_name');
+        var goods_price = $(this).attr('goods_price');
+
+        if ($('#goods-id-' + goods_id).val() <= 1) {
+            if ($('#goods-id-' + goods_id).val() == 1) {
+                var currentNums = 0;
+                $(".goods-num-" + goods_id).html(currentNums).hide();
+                $('#goods-id-' + goods_id).val(currentNums);
+                updateCartGoodsList(goods_id, goods_name, goods_price, 1, 'cut');
+                updateTotal(goods_price, 1, 'cut');
+            }
+        } else {
+            var currentNums = parseInt($('#goods-id-' + goods_id).val()) - 1;
+            $(".goods-num-" + goods_id).html(currentNums);
+            $('#goods-id-' + goods_id).val(currentNums);
+            updateCartGoodsList(goods_id, goods_name, goods_price, 1, 'cut');
+            updateTotal(goods_price, 1, 'cut');
+
+        }
+    });
+
+    /* 更新购物车列表 */
+    function updateCartGoodsList(id, name, price, num, type) {
+        price = parseFloat(price);
+        num = parseInt(num);
+        //新加入html
+        if ($("#cart-goods-id-" + id).html() == undefined) {
+            if (type == 'add') {
+                var str = '';
+                str += '<tr id="cart-goods-id-' + id + '" goods_id="' + id + '">';
+                str += '<td style="width: 50%;" class="am-cart-goods">' + name + '</td>';
+                str += '<td style="width: 20%;" class="am-cart-goods-list-price"><span class="am-cart-goods-list-price-num">' + price * num + '</span>元</td>';
+                str += '<td style="width: 30%;" class="am-cart-operate">';
+                str += '<a class="am-reduce c-g-l-p" goods_id="' + id + '" goods_name="' + name + '" goods_price="' + price + '" type="cut">-</a>';
+                str += '<input type="text" name="input-num-goods-id-' + id + '" class="input-num" goods_id="' + id + '" goods_name="' + name + '" goods_price="' + price + '" old-num="' + num + '" value="' + num + '" size="3">';
+                str += '<a class="am-add c-g-l-p" goods_id="' + id + '" goods_name="' + name + '" goods_price="' + price + '" type="add">+</a>';
+                str += '</td>';
+                str += '</tr>';
+                $(".cart-goods").append(str);
+            }
+        } else {
+            //更新数量
+            if (type == 'add') {
+                //增加
+                var currentPrice = parseFloat($("#cart-goods-id-" + id).find(".am-cart-goods-list-price-num").html());
+                currentPrice = accAdd(currentPrice, accMul(price, num));
+                $("#cart-goods-id-" + id).find(".am-cart-goods-list-price-num").html(currentPrice);
+                var currentNum = parseInt($("#cart-goods-id-" + id).find("input").val()) + num;
+                $("#cart-goods-id-" + id).find("input").val(currentNum);
+                $("#cart-goods-id-" + id).find("input").attr('old-num', currentNum);
+            } else {
+                //减少
+                var curN = parseInt($("#cart-goods-id-" + id).find("input").val()) - num;
+                if (curN <= 0) {
+                    curN = 0;
+                }
+                var current_price = accSub(parseFloat($("#cart-goods-id-" + id).find(".am-cart-goods-list-price-num").html()), accMul(price, num));
+                $("#cart-goods-id-" + id).find(".am-cart-goods-list-price-num").html(current_price);
+                $("#cart-goods-id-" + id).find("input").val(curN);
+                $("#cart-goods-id-" + id).find("input").attr('old-num', curN);
+                if (curN <= 0) {
+                    $("#cart-goods-id-" + id).remove();
+                }
+            }
+        }
+        updateCartLocal();
+    }
+    /* 购物车列表增加减少商品按钮 */
+    $(".cart-goods").on('click', '.c-g-l-p', function () {
+        var goods_id = $(this).attr('goods_id');
+        var goods_name = $(this).attr('goods_name');
+        var goods_price = $(this).attr('goods_price');
+        var type = $(this).attr('type');
+        updateCartGoodsList(goods_id, goods_name, goods_price, 1, type);
+        updateTotal(goods_price, 1, type);
+
+        if (type == 'add') {
+            var currentNums = parseInt($('#goods-id-' + goods_id).val()) + 1;
+            if (currentNums > 0) {
+                $(".goods-num-" + goods_id).show().html(currentNums);
+                $('#goods-id-' + goods_id).val(currentNums);
+            }
+        } else {
+            if ($('#goods-id-' + goods_id).val() <= 1) {
+                var currentNums = 0;
+                $(".goods-num-" + goods_id).html(currentNums).hide();
+                $('#goods-id-' + goods_id).val(currentNums);
+            } else {
+                var currentNums = parseInt($('#goods-id-' + goods_id).val()) - 1;
+                $(".goods-num-" + goods_id).html(currentNums);
+                $('#goods-id-' + goods_id).val(currentNums);
+            }
+        }
+    });
+
+    /* 购物车列表增加减少商品输入 */
+    $(".cart-goods").on('blur', '.input-num', function () {
+        var num = parseInt($(this).val());
+        var old_num = parseInt($(this).attr('old-num'));
+        var goods_price = $(this).attr('goods_price');
+        var goods_id = $(this).attr('goods_id');
+        if (num > 0) {
+            $(this).val(old_num);
+            if (num > old_num) {
+                //增加
+                updateCartGoodsList(goods_id, 0, goods_price, accSub(num, old_num), 'add');
+                updateTotal(goods_price, accSub(num, old_num), 'add');
+
+                var currentNums = parseInt($('#goods-id-' + goods_id).val()) + parseInt(accSub(num, old_num));
+                if (currentNums > 0) {
+                    $(".goods-num-" + goods_id).show().html(currentNums);
+                    $('#goods-id-' + goods_id).val(currentNums);
+                }
+            } else if (num < old_num) {
+                //减少
+                updateCartGoodsList(goods_id, 0, goods_price, accSub(old_num, num), 'cut');
+                updateTotal(goods_price, accSub(old_num, num), 'cut');
+
+                var currentNums = parseInt($('#goods-id-' + goods_id).val()) - parseInt(accSub(old_num, num));
+                $(".goods-num-" + goods_id).html(currentNums);
+                $('#goods-id-' + goods_id).val(currentNums);
+            }
+        } else {
+            $(this).val(old_num);
+        }
+    });
+
+    /* 更新购物车本地存储数据 */
+    function updateCartLocal() {
+        var cart_goods = $(".cart-goods tbody").children();
+        var goods_list = '[';
+        if (cart_goods.length > 0) {
+            for (var i = 0; i < cart_goods.length; i++) {
+                var cg = '{goods_id:' + $(cart_goods[i]).attr('goods_id') + ', nums:' + $(cart_goods[i]).find('input').val() + '}';
+                if (i == (cart_goods.length - 1)) {
+                    goods_list += cg;
+                } else {
+                    goods_list += (cg + ',');
+                }
+            }
+            goods_list += ']';
+            localStorage.setItem('goods_list', goods_list);
+        } else {
+            localStorage.removeItem('goods_list');
+        }
+    }
+
+
+    /* 查找本地存储的购物车商品进行显示 */
+    function setCartHtml() {
+        var cart_goods = getCartLocalGoods();
+        if (cart_goods) {
+            var str = '';
+            for (var i = 0; i < cart_goods.length; i++) {
+                str += cart_goods[i].goods_id + ':' + cart_goods[i].nums + '-';
+            }
+            $.post($("#load_goods_list").val(), {goods_list: str}, function (o) {
+                if (o.status) {
+                    //生成购物车清单列表
+                    if (o.data.length > 0) {
+                        var str = '';
+                        var total_nums = 0;
+                        var total_price = 0;
+                        for (var i = 0; i < o.data.length; i++) {
+                            str += '<tr id="cart-goods-id-' + o.data[i].goods_info.id + '" goods_id="' + o.data[i].goods_info.id + '">' +
+                                    '<td style="width: 50%;" class="am-cart-goods">' + o.data[i].goods_info.name + '</td>' +
+                                    '<td style="width: 20%;" class="am-cart-goods-list-price"><span class="am-cart-goods-list-price-num">' + accMul(o.data[i].goods_info.price, o.data[i].nums) + '</span>元</td>' +
+                                    '<td style="width: 30%;" class="am-cart-operate">' +
+                                    '<a class="am-reduce c-g-l-p" goods_id="' + o.data[i].goods_info.id + '" goods_name="' + o.data[i].goods_info.name + '" goods_price="' + o.data[i].goods_info.price + '" type="cut">-</a>' +
+                                    '<input type="text" name="input-num-goods-id-' + o.data[i].goods_info.id + '" class="input-num" goods_id="' + o.data[i].goods_info.id + '" goods_name="' + o.data[i].goods_info.name + '" goods_price="' + o.data[i].goods_info.price + '" old-num="' + o.data[i].nums + '" value="' + o.data[i].nums + '" size="3">' +
+                                    '<a class="am-add c-g-l-p" goods_id="' + o.data[i].goods_info.id + '" goods_name="' + o.data[i].goods_info.name + '" goods_price="' + o.data[i].goods_info.price + '" type="add">+</a>' +
+                                    '</td>' +
+                                    '</tr>';
+                            total_nums = accAdd(total_nums, o.data[i].nums);
+                            total_price = accAdd(total_price, accMul(o.data[i].goods_info.price, o.data[i].nums));
+
+                            $("#goods-id-" + o.data[i].goods_info.id).val(o.data[i].nums);
+                            $(".goods-num-" + o.data[i].goods_info.id).show().html(o.data[i].nums);
+
+                        }
+                        $(".cart-goods").html(str);
+                        $("#cart-num").html(total_nums);
+                        $("#cart-total-price").html('总价: ' + total_price + '元<br/>品类数: ' + $(".cart-goods").find('tr').length);
+                        $("#total_price").val(total_price);
+                    } else {
+                        $("#cart-total-price").html('购物车是空的<br>快快选购吧');
+                    }
+                }
+            }, 'json');
+
+        }
+    }
+
+    /* 清空购物车 */
+    $(".am-cart-clear").click(function () {
+        localStorage.clear();
+        location.replace(location.href);
+    });
+
+    /* 选好了 */
+    $(".am-btn-sel-good").click(function () {
+        if (parseInt($("#cart-num").html()) > 0) {
+            location.replace($("#confirmOrderUrl").val());
+        } else {
+            return false;
+        }
+    });
+
+    //开始加载本地存储的购物车数据进行显示到购物车列表
+    setCartHtml();
+
+    $("#search").click(function(){
+        if($('#keywords').val()){
+            redirect($("#search_url").val() + '&keywords=' + $('#keywords').val(), 0);
+        }
+    });
+
+</script>
+<include file="Public:_public_footer_end"/>

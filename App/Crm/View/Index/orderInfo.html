@@ -1,0 +1,54 @@
+<include file="Public:_public_header_start" />
+<include file="Public:_public_header_end" />
+<div class="am-container">
+            <div class="am-panel am-panel-success am-margin-top-sm">
+                <div class="am-panel-hd" style="font-size: 1.4rem;">
+                    <if condition="$ol['pay_status'] eq 0"><a style="color:#dd514c">未付款,</a><else /><a style="color:#1abf85">已付款,</a></if>
+                    <if condition="$ol['distribution_status'] eq 0">
+                        <a style="color:#dd514c">未发货</a>
+                        <elseif condition="$ol['distribution_status'] eq 1" />
+                        <a style="color:#1abf85">配送中</a>
+                        <else />
+                        <a style="color:#1abf85">已收货</a>
+                    </if>&nbsp;&nbsp;&nbsp;&nbsp;
+                    编号: {$ol.id}&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="am-panel-bd">
+                    <table style="width: 100%;">
+                        <tr style="font-size:1.4rem;height: 3rem;">
+                            <td style="width: 100%;height: 4rem;text-align: left;border-bottom: 1px solid #eee;" colspan="3">
+                                下单时间: {$ol.ctime|date="Y-m-d H:i:s", ###}<br />
+                                <if condition="$ol['take_time']">
+                                收货时间: {$ol.take_time|date="Y-m-d H:i:s", ###}<br />
+                                    </if>
+                                收货信息: {$ol.freight_name},{$ol.freight_phone},{$ol.freight_address}
+                            </td>
+                        </tr>
+                        <volist name="ol['goods_list']" id="gl">
+                            <tr style="font-size:1.25rem;border-bottom: 1px solid #eee;height: 3rem;">
+                                <td style="width: 60%;height: 2rem;">{$gl.goods_name}</td>
+                                <td style="width: 10%;">x{$gl.count}</td>
+                                <td style="width: 30%;color:#dd514c;text-align: right;">{$gl.price}元</td>
+                            </tr>
+                        </volist>
+                        <tr style="font-size:1rem;border-bottom: 1px solid #eee;height: 3rem;">
+                            <td style="width: 100%;height: 2rem;text-align: right" colspan="3">商品总价: <a style="color:#dd514c;">{$ol.price}元</a> + 运费: <a style="color:#dd514c;">{$ol.freight_price}元</a> - 优惠券: <a style="color:#dd514c;">{$ol.coupons_price}元</a></td>
+                        </tr>
+                        <tr style="font-size:1.4rem;height: 3rem;">
+                            <td style="width: 100%;height: 2rem;text-align: right" colspan="3">总价: <a style="color:#dd514c;">{$ol.pay_price}元</a></td>
+                        </tr>
+                    </table>
+                    <!--<if condition="$ol['distribution_status'] eq 1">-->
+                        <!--<a href="javascript:;" url="{:U('Mobile/Order/take')}" order_id="{$ol.id}" return_url="{:U('Order/my', array('type'=>'finish'))}" class="am-btn am-btn-warning am-btn-sm am-btn-block take">确认收货</a>-->
+                    <!--</if>-->
+                    <!--<if condition="$ol.pay_status eq 0">-->
+                        <!--<a href="{:U('Mobile/Order/finish', array('order_id'=>$ol['id']))}" class="am-btn am-btn-danger am-btn-sm am-btn-block">继续付款</a>-->
+                    <!--</if>-->
+                </div>
+            </div>
+    </if>
+</div>
+<include file="Public:_public_footer_start" />
+<script>
+</script>
+<include file="Public:_public_footer_end" />

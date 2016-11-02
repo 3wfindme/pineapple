@@ -1,0 +1,77 @@
+<div id="Coupons_Bar" class="Bar_tools">
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-viewlist',plain:true" onclick="Data_Reload('Coupons_Data_List');"><span>列表or刷新</span></a>
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-search',plain:true" onclick="Data_Search('Coupons_Search_From','Coupons_Data_List');"><span>搜索</span></a>
+    <if condition="Is_Auth('Admin/Coupons/addUserCoupons')">
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-add',plain:true" onclick="Submit_Form('Coupons_Form','Coupons_Data_List','{:U('addUserCoupons')}','','发放优惠券','');"><span>发放优惠券</span></a>
+    </if>
+</div>
+<div style="display: none">
+    <form id="Coupons_Form" class="update_from" style="width:600px; height:500px;"></form>
+    </form>
+    <form id="Coupons_Search_From" class="search_from">
+        <table bCoupons="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tr>
+                <th>用户ID :</th>
+                <td><input name="uid" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>发放者ID :</th>
+                <td><input name="give_uid" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>优惠券 :</th>
+                <td>
+                    <select name="coupons_id" class="easyui-combobox" style="height:30px;" id="coupons_id">
+                        <option value="-1">全部</option>
+                        <volist name="coupons_list" id="cl">
+                            <option value="{$cl.id}">{$cl.name}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>使用状态 :</th>
+                <td><select name="is_do" class="easyui-combobox" style="height:30px;">
+                    <option value="-1">全部</option>
+                    <option value="0">未使用</option>
+                    <option value="1">已使用</option>
+                </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<table id="Coupons_Data_List"></table>
+
+<script type="text/javascript">
+    $(function() {
+        $("#Coupons_Data_List").datagrid({
+            url : "{:U('Coupons/user')}",
+            fit : true,
+            striped : true,
+            bCoupons : false,
+            pagination : true,
+            pageSize : 20,
+            pageList : [ 10, 20, 50 ],
+            pageNumber : 1,
+            sortName : 'ctime',
+            sortCoupons : 'DESC',
+            toolbar : '#Coupons_Bar',
+            singleSelect : true,
+            columns : [[
+                {field : 'id',title : 'ID',width : 40,sortable:true},
+                {field : 'user_name',title : '拥有者',width : 150,sortable:true},
+                {field : 'name',title : '优惠券名称',width : 150,sortable:true},
+                {field : 'price',title : '优惠券价格',width : 100,sortable:true},
+                {field : 'meet_price',title : '大于价格可以使用',width : 200,sortable:true},
+                {field : 'ctime',title : '创建时间',width : 150,sortable:true},
+                {field : 'is_do',title : '使用',width : 50,sortable:true},
+                {field : 'dtime',title : '使用时间',width : 150,sortable:true},
+                {field : 'give_user_name',title : '发放人',width : 50,sortable:true},
+                {field : 'operate',title : '操作',width : 100}
+            ]]
+        });
+
+    });
+</script>

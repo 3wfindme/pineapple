@@ -1,0 +1,168 @@
+<include file="Public:_public_header_start"/>
+<include file="Public:_public_header_end"/>
+
+<div class="am-g">
+    <div class="am-t-c am-margin">
+        <h3>注册新用户</h3>
+        <hr>
+    </div>
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered ">
+        <form method="post" class="am-form" id="doc-vld-msg" action="{:U('Mobile/User/doRegister')}">
+            <div class="am-form-group">
+                <label for="username">用户名:</label>
+                <input type="text" name="username" id="username" minlength="2" placeholder="可以输入字母或者中文" value=""
+                       required/>
+            </div>
+            <div class="am-form-group">
+                <label for="password">密码:</label>
+                <input type="password" name="password" id="password" minlength="6" maxlength="16"
+                       placeholder="输入6~16长度的数字/英文字母大小写" value="" required/>
+            </div>
+            <div class="am-form-group">
+                <label for="password">确认密码:</label>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="输入上面的密码"
+                       id="confirm_password" data-equal-to="#password" data-validation-message="确认密码必须与上面一致" value=""
+                       required/>
+            </div>
+            <div class="am-form-group">
+                <label for="real_name">收货人:</label>
+                <input type="text" name="real_name" id="real_name" minlength="2" maxlength="50" placeholder="填写收货人真实姓名"
+                       value="" required/>
+            </div>
+            <div class="am-form-group">
+                <label for="phone">手机号码:</label>
+                <input type="text" name="phone" id="phone" minlength="11" placeholder="填写收货人手机号码" value="" required/>
+            </div>
+            <div class="am-form-group">
+                <label for="address">收货地址:</label>
+                <input type="text" name="address" id="address" minlength="6" maxlength="50"
+                       placeholder="需要填写市/区/街道/门牌号/店名" value="" required/>
+            </div>
+            <div class="am-form-group">
+                <label for="stores_type">门店类型:</label>
+
+                <div class="am-form-group">
+                    <!--<label class="am-radio-inline"><input type="radio" name="stores_type" id="stores_type"-->
+                                                          <!--data-validation-message="请选择您的门店类型" value="1" required/> 果蔬菜店</label>-->
+                    <!--<label class="am-radio-inline"><input type="radio" name="stores_type" value="2"> 饭店</label>-->
+                    <!--<label class="am-radio-inline"><input type="radio" name="stores_type" value="3"> 烧烤店</label>-->
+                    <!--<label class="am-radio-inline"><input type="radio" name="stores_type" value="4"> 超市</label>-->
+                    <div class="am-btn-group doc-js-btn-1" data-am-button>
+                        <volist name="stores_type" id="st" key="k">
+                        <label class="am-btn am-btn-default am-btn-sm">
+                            <input type="radio" name="stores_type"  value="{$st.id}" <if condition="$k eq 1"> data-validation-message="请选择您的门店类型" required </if> /> {$st.name}
+                        </label>
+                        </volist>
+
+                    </div>
+                </div>
+                <div class="am-cf">
+                    <input type="submit" name="" value="注 册" class="am-btn am-btn-warning am-fl am-btn-block">
+                </div>
+                <br/>
+
+                <div class="am-cf">
+                    <a href="{:U('Mobile/User/login')}" class="am-btn am-btn-success am-fl am-btn-block">已有帐号? 登录</a>
+                </div>
+        </form>
+        <input type="hidden" id="validate_username" value="{:U('Mobile/User/validateUsername')}">
+        <hr>
+        <include file="Public/web_info"/>
+    </div>
+</div>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">温馨提示</div>
+        <div class="am-modal-bd" id="msg_info">
+
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+<include file="Public:_public_footer_start"/>
+<script>
+    //整体表单验证
+    $('#doc-vld-msg').validator({
+        keyboardEvents: 'focusout',
+        onValid: function (validity) {
+            $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+        },
+
+        onInValid: function (validity) {
+            var $field = $(validity.field);
+            var $group = $field.closest('.am-form-group');
+            var $alert = $group.find('.am-alert');
+            // 使用自定义的提示信息 或 插件内置的提示信息
+            var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+            if (!$alert.length) {
+                $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+                appendTo($group);
+            }
+
+            $alert.html(msg).show();
+        },
+
+        validate: function (validity) {
+            //远程验证用户名是否已经被注册
+//                if($(validity.field).attr('name')){
+//                    return $.ajax({
+//                        url: $("#validate_username").val(),
+//                        type:'post',
+//                        cache: false,
+//                        data:{username:$(validity.field).val()},
+//                        dataType: 'json'
+//                    }).then(function(data) {
+//                        // Ajax 请求成功，根据服务器返回的信息，设置 validity.valid = true or flase
+//                        if(data.status){
+//                            validity.valid = true;
+//                        }else{
+//                            validity.valid = false;
+//                            $(validity.field).data('validationMessage');
+//                        }
+//                        return validity;
+//                    }, function() {
+//                        // Ajax 请求失败，根据需要决定验证是否通过，然后返回 validity
+//                        validity.valid = true;
+//                        return validity;
+//                    });
+//                }
+//                return validity;
+        },
+
+        submit: function () {
+            var formValidity = this.isFormValid();
+            if (formValidity) {
+                $.post($("#doc-vld-msg").attr('action'), $("#doc-vld-msg").serialize(), function (o) {
+                    $("#msg_info").html(o.msg);
+                    $("#my-alert").modal();
+                    if (o.status) {
+                        redirect('/', 1500);
+                    }
+                }, 'json');
+            }
+
+//                if(formValidity){
+//                    $.post($("#doc-vld-msg").attr('action'), $("#doc-vld-msg").serialize(), function(o){
+//                        if(o.status){
+//
+//                        }else{
+//
+//                        }
+//                    }, 'json');
+//                }
+
+//                $.when(formValidity).then(function() {
+//                    // 验证成功的逻辑
+//                    console.log('开始提交数据');
+//                }, function() {
+//                    // 验证失败的逻辑
+//                    console.log('222');
+//                });
+            return false;
+        }
+    });
+</script>
+<include file="Public:_public_footer_end"/>

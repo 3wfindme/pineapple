@@ -1,0 +1,87 @@
+<div id="ModelField_Bar" class="Bar_tools">
+<a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-viewlist',plain:true" onclick="Data_Reload('ModelField_Data_List');"><span>列表or刷新</span></a>
+<a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-search',plain:true" onclick="Data_Search('ModelField_Search_From','ModelField_Data_List');"><span>搜索</span></a>
+<if condition="Is_Auth('Admin/User/add')">
+<a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-add',plain:true" onclick="Submit_Form('ModelField_Form','ModelField_Data_List','{:U('add',array('model_id' => I ( 'get.model_id' ) ))}','','新增数据','');"><span>新增</span></a>
+</if>
+</div>
+<div style="display: none">
+  <form id="ModelField_Form" class="update_from" style="width:750px; height:500px;"></form>
+  <form id="ModelField_Search_From" class="search_from">
+    <table>
+      <tr>
+        <th>字段名:</th>
+        <td><input type="text" name="s_name" class="easyui-textbox" style="height:30px;"></td>
+      </tr>
+      <tr>
+        <th>字段标题:</th>
+        <td><input type="text" name="s_title" class="easyui-textbox" style="height:30px;"></td>
+      </tr>
+      <tr>
+        <th>数据类型:</th>
+        <td><select class="easyui-combobox" style="height:30px;" name="s_type" data-options="editable:false, onSelect:function(rec){field_setting(rec.value)}">
+            <volist name="Think.config.FIELD_LIST" id="vo">
+              <option value="{$vo.type}">{$vo.title}</option>
+            </volist>
+          </select></td>
+      </tr>
+      <tr>
+        <th>备注:</th>
+        <td><input class="easyui-textbox" style="height:30px;" type="text" name="s_remark"></td>
+      </tr>
+      <tr>
+        <th>状态:</th>
+        <td><select name="s_status" class="easyui-combobox" style="height:30px;">
+            <option value="">全部</option>
+            <option value="0">禁用</option>
+            <option value="1">启用</option>
+          </select></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<table id="ModelField_Data_List"></table>
+<script type="text/javascript">
+$(function () {
+	$("#ModelField_Data_List").datagrid({
+		url : "{:U('Admin/ModelField/index')}&model_id={:I('get.model_id')}&app_id={$app_id}",
+		fit : true,
+		striped : true,
+		border : false,
+		pagination : true,
+		pageSize : 20,
+		pageList : [10, 20, 50],
+		pageNumber : 1,
+		sortName : 'id',
+		sortOrder : 'desc',
+		toolbar : '#ModelField_Bar',
+		singleSelect:true,
+		columns : [[
+			{field : 'name',title : '字段名',width : 100,sortable:true},
+			{field : 'title',title : '字段标题',width : 100,sortable:true},
+			{field : 'type',title : '数据类型',width : 100,sortable:true},
+			{field : 'remark',title : '备注',width : 100,sortable:true},
+			{field : 'status',title : '状态',width : 100,sortable:true},
+			{field : 'sort_l',title : '列表',width : 40,sortable:true},
+			{field : 'sort_s',title : '搜索',width : 40,sortable:true},
+			{field : 'sort_a',title : '新增',width : 40,sortable:true},
+			{field : 'sort_e',title : '修改',width : 40,sortable:true},
+			{field : 'l_width',title : '列表宽度',width : 55,sortable:true},
+			{field : 'validate_time',title : '验证时间',width : 100,sortable:true},
+			{field : 'auto_time',title : '完成时间',width : 100,sortable:true},
+			{field : 'operate',title : '操作',width : 200}
+		]],
+	});
+})
+function field_setting(fieldtype) {
+    if (fieldtype == "") {
+        return false;
+    }
+    $.getJSON("{:U('Admin/Function/field_setting')}&r_type=json",{fieldtype:fieldtype}, function (data) {
+        $('#extra').html(data.extra);
+        $('#field').textbox({'value':data.field});
+		$.parser.parse('#extra');
+    });
+}
+
+</script>

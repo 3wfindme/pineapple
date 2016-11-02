@@ -1,0 +1,32 @@
+<include file="Public:_public_header_start" />
+<include file="Public:_public_header_end" />
+<table class="am-table">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>订单名称</th>
+        <th>下单时间</th>
+        <th>支付状态</th>
+        <th>配送状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="list" id="l">
+        <tr>
+            <td>{$l.id}</td>
+            <td>{$l.name}</td>
+            <td>{$l.ctime|date="Y-m-d H:i:s", ###}</td>
+            <td>{$l.pay_status}</td>
+            <td>{$l.distribution_status}</td>
+            <td><a href="{:U('Crm/Index/orderInfo', array('id'=>$l['id']))}" class="am-btn am-btn-default am-btn-xs">详情</a></td>
+        </tr>
+    </volist>
+    </tbody>
+</table>
+<hr>
+{$page}
+<include file="Public:_public_footer_start" />
+<script>
+</script>
+<include file="Public:_public_footer_end" />

@@ -1,0 +1,36 @@
+<include file="Public:_public_header_start" />
+<include file="Public:_public_header_end" />
+<p>&nbsp;我的客户今日下单总斤数: {$all_count} 斤, 本月下单总斤数: {$all_count_month} 斤 </p>
+<php>if($_POST['username']){</php>
+<p>&nbsp;&nbsp;显示用户名包含"<a style="color: red;"><php>echo $_POST['username'];</php></a>"的客户</php>
+<php>}</php>
+<table class="am-table">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>客户</th>
+        <th>手机</th>
+        <th>地址</th>
+        <th>门店</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="list" id="l">
+    <tr>
+        <td>{$l.id}</td>
+        <td>{$l.username}</td>
+        <td>{$l.phone}</td>
+        <td>{$l.address}</td>
+        <td>{$l.stores_type}</td>
+        <td><a href="{:U('Crm/Index/userInfo', array('uid'=>$l['id']))}" class="am-btn am-btn-default am-btn-xs">详情</a></td>
+    </tr>
+        </volist>
+    </tbody>
+</table>
+<hr>
+{$page}
+<include file="Public:_public_footer_start" />
+<script>
+</script>
+<include file="Public:_public_footer_end" />

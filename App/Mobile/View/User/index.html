@@ -1,0 +1,99 @@
+<include file="Public:_public_header_start"/>
+<include file="Public:_public_header_end"/>
+
+<header data-am-widget="header"
+        class="am-header am-header-haocai">
+    <div class="am-header-left am-header-nav">
+        <a href="/" class="">
+
+            <i class="am-header-icon am-icon-home"></i>
+        </a>
+    </div>
+
+    <h1 class="am-header-title">
+        用户中心
+    </h1>
+
+    <div class="am-header-right am-header-nav">
+        <a href="{:U('Mobile/User/index')}" class="">
+
+            <i class="am-header-icon am-icon-user"></i>
+        </a>
+    </div>
+</header>
+
+<div id="widget-list">
+    <ul class="am-list m-widget-list am-user-index-ul">
+        <li>
+            <a href="{:U('Mobile/Order/my')}">
+                <i class="am-icon-tasks am-user-index-li-left"></i>
+                <span class="widget-name am-user-index-li-center">我的订单</span>
+                <i class="am-icon-chevron-right am-user-index-li-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Mobile/Order/my', array('type'=>'finish'))}">
+                <i class="am-icon-tasks am-user-index-li-left"></i>
+                <span class="widget-name am-user-index-li-center">收货订单</span>
+                <i class="am-icon-chevron-right am-user-index-li-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Mobile/Profile/editProfile')}">
+                <i class="am-icon-edit am-user-index-li-left"></i>
+                <span class="widget-name am-user-index-li-center">收货地址</span>
+                <i class="am-icon-chevron-right am-user-index-li-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Mobile/Profile/editPasswd')}">
+                <i class="am-icon-key am-user-index-li-left"></i>
+                <span class="widget-name am-user-index-li-center">修改密码</span>
+                <i class="am-icon-chevron-right am-user-index-li-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" id="logout" url="{:U('Mobile/User/logout')}">
+                <i class="am-icon-rotate-left am-user-index-li-left"></i>
+                <span class="widget-name am-user-index-li-center">退出登录</span>
+                <i class="am-icon-chevron-right am-user-index-li-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<br/>
+<br/>
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="logout-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">温馨提示</div>
+        <div class="am-modal-bd">
+            你，确定要退出登录吗？
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+        </div>
+    </div>
+</div>
+
+<include file="Public/web_info"/>
+<include file="Public:_public_footer_start"/>
+<script>
+    $("#logout").click(function () {
+        $("#logout-confirm").modal({
+            relatedTarget: this,
+            onConfirm: function (options) {
+                $.post($("#logout").attr('url'), {}, function (o) {
+                    if (o.status) {
+                        redirect('/');
+                    }
+                }, 'json');
+            },
+            // closeOnConfirm: false,
+            onCancel: function () {
+            }
+        });
+    });
+</script>
+<include file="Public:_public_footer_end"/>

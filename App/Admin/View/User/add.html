@@ -1,0 +1,34 @@
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+	<tr>
+		<th>用户名 : </th>
+		<td><input name="username" type="text" class="easyui-textbox" style="height:30px;" value="" data-options="required:false"></td>
+	</tr><tr>
+		<th>昵称/姓名 : </th>
+		<td><input name="nickname" type="text" class="easyui-textbox" style="height:30px;" value="" data-options="required:false"></td>
+	</tr><tr>
+		<th>密码 : </th>
+		<td><input name="password" type="text" class="easyui-textbox" style="height:30px;" value="" data-options="required:false"></td>
+	</tr><tr>
+		<th>邮箱 : </th>
+		<td><input name="email" type="text" class="easyui-textbox" style="height:30px;" value="" data-options="required:false"></td>
+	</tr><tr>
+		<th>备注 : </th>
+		<td><input name="remark" value="" type="text" class="easyui-textbox" data-options="required:false,multiline:true" style="width:300px; height:80px;"></td>
+	</tr><tr>
+		<th>状态 : </th>
+		<td><select name="status" class="easyui-combobox" style="height:30px;" data-options="value:'0',url:'{:U("Admin/Function/get_config")}&cname=USER_STATUS_TYPE|type|title&r_type=json',valueField:'type',textField:'title',multiple:false,required:false,editable:false"></select></td>
+	</tr>
+	<tr>
+		<th>用户类型 : </th>
+		<td>
+			<select name="ident">
+				<option value="1">网站管理员</option>
+				<option value="2">普通用户</option>
+				<option value="3">业务员</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>信息 : </th>
+		<td><input name="info" value="" type="text" class="easyui-textbox" data-options="required:false,multiline:true" style="width:300px; height:80px;"></td>
+	</tr></table>

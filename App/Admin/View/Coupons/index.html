@@ -1,0 +1,99 @@
+<div id="Coupons_Bar" class="Bar_tools">
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-viewlist',plain:true" onclick="Data_Reload('Coupons_Data_List');"><span>列表or刷新</span></a>
+    <!--<a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-search',plain:true" onclick="Data_Search('Coupons_Search_From','Coupons_Data_List');"><span>搜索</span></a>-->
+    <if condition="Is_Auth('Admin/Coupons/add')">
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-add',plain:true" onclick="Submit_Form('Coupons_Form','Coupons_Data_List','{:U('add')}','','新增优惠券','');"><span>新增</span></a>
+    </if>
+</div>
+<div style="display: none">
+    <form id="Coupons_Form" class="update_from" style="width:600px; height:500px;"></form>
+    </form>
+    <form id="Coupons_Search_From" class="search_from">
+        <table bCoupons="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tr>
+                <th>用户ID :</th>
+                <td><input name="uid" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>下单日期 :</th>
+                <td>
+                    <input name="ctime_begin" type="text" class="easyui-textbox" style="height:30px;"> - <input name="ctime_end" type="text" class="easyui-textbox" style="height:30px;">
+                    请输入例如:2015-01-01 8:00:00格式.
+                </td>
+            </tr>
+            <tr>
+                <th>收货人 :</th>
+                <td><input name="freight_name" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>手机 :</th>
+                <td><input name="freight_phone" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>收货地址 :</th>
+                <td><input name="freight_address" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>门店类型 :</th>
+                <td>
+                    <select name="stores_type" class="easyui-combobox" style="height:30px;" id="stores_type">
+                        <option value="-1">全部</option>
+                        <volist name="stores_type" id="st">
+                            <option value="{$st.id}">{$st.name}</option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>付款状态 :</th>
+                <td><select name="pay_status" class="easyui-combobox" style="height:30px;">
+                    <option value="-1">全部</option>
+                    <option value="0">未付款</option>
+                    <option value="1">已付款</option>
+                </select>
+                </td>
+            </tr>
+            <tr>
+                <th>发货状态 :</th>
+                <td><select name="distribution_status" class="easyui-combobox" style="height:30px;">
+                    <option value="-1">全部</option>
+                    <option value="0">未发货</option>
+                    <option value="1">配送中</option>
+                    <option value="2">已收货</option>
+                </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<table id="Coupons_Data_List"></table>
+
+<script type="text/javascript">
+    $(function() {
+        $("#Coupons_Data_List").datagrid({
+            url : "{:U('Coupons/index')}",
+            fit : true,
+            striped : true,
+            bCoupons : false,
+            pagination : true,
+            pageSize : 20,
+            pageList : [ 10, 20, 50 ],
+            pageNumber : 1,
+            sortName : 'ctime',
+            sortCoupons : 'DESC',
+            toolbar : '#Coupons_Bar',
+            singleSelect : true,
+            columns : [[
+                {field : 'id',title : 'ID',width : 40,sortable:true},
+                {field : 'name',title : '优惠券名称',width : 150,sortable:true},
+                {field : 'meet_price',title : '满足价格',width : 60,sortable:true},
+                {field : 'price',title : '优惠券价格',width : 150,sortable:true},
+                {field : 'ctime',title : '创建时间',width : 150,sortable:true},
+                {field : 'utime',title : '修改时间',width : 150,sortable:true},
+                {field : 'operate',title : '操作',width : 100}
+            ]]
+        });
+
+    });
+</script>

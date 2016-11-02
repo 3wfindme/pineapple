@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>七台河守斌好菜配送</title>
+    <style>
+        html {
+            font-family: "microsoft yahei", "黑体";
+        }
+        body {
+        }
+        .wrapper {
+
+        }
+        .wrapper h1 {
+            font-size:14px;
+            margin:20px 0;
+        }
+        table {
+            width:100%;
+            border:1px solid #ccc;
+            border-collapse: collapse;
+        }
+        table td {
+            border: 1px solid #ccc;
+            }
+        .th td {
+            text-align: center;
+            font-size:16px;
+            font-weight: bold;
+        }
+        .gl td {
+            padding-left:6px;
+            font-size:14px;
+        }
+        p {
+            font-size:14px;
+        }
+        .print a {
+            display: block;
+            padding: 10px 20px;
+            background: #1abf85;
+            color:#fff;
+            text-decoration: none;
+        }
+        .print a:hover {
+            background: #1ABF63;
+        }
+    </style>
+</head>
+<body style="margin:0 auto;width: 800px;">
+<div class="wrapper">
+    <h1>订单名称: {$info.name}</h1>
+    <p>用户名: {$info.username}
+    <p>收货人: {$info.freight_name}&nbsp;&nbsp;&nbsp;&nbsp;手机: {$info.freight_phone}</p>
+    <p>收货地址: {$info.freight_address}</p>
+    <p>支付方式: {$info.pay_type_name}</p>
+    <p>下单时间: {$info.ctime|date="Y年m月d日 H:i:s", ###}&nbsp;&nbsp;&nbsp;&nbsp;<if condition="$info['pay_time']">支付时间: {$info.pay_time|date="Y年m月d日 H:i:s", ###}</if></p>
+    <table cellspacing="0" cellpadding="0" border="1">
+        <tr class="th">
+            <td style="width: 10%;height: 40px;">商品编号</td>
+            <td style="width: 30%;">商品名称</td>
+            <td style="width: 20%;">商品价格</td>
+            <td style="width: 20%;">商品数量</td>
+            <td style="width: 20%;">总价</td>
+        </tr>
+        <volist name="goods_list" id="gl">
+            <tr class="gl">
+                <td style="height: 32px;text-align: center;">{$gl.goods_id}</td>
+                <td>{$gl.goods_name}</td>
+                <td style="text-align: right">{$gl.price} 元 &nbsp;&nbsp;</td>
+                <td style="text-align: center">{$gl.count}</td>
+                <td style="text-align: right"><php>echo $gl['price'] * $gl['count'];</php> 元 &nbsp;&nbsp;</td>
+            </tr>
+        </volist>
+        <tr>
+            <td colspan="5" style="height: 32px;font-size:14px;text-align: right;padding-right: 6px;">
+                商品总价: {$info.price} 元 + 运费: {$info.freight_price} 元 - 优惠券: {$info.coupons_price} 元
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="height: 32px;font-size:14px;text-align: right;padding-right: 6px;">
+                支付价格: {$info.pay_price} 元
+            </td>
+        </tr>
+    </table>
+    <p style="text-align: center;" class="print">
+        <a href="javascript:window.print();">立即打印</a>
+    </p>
+    <p style="text-align: center;font-size:16px;margin-top:40px;">七台河守斌好菜配送</p>
+</div>
+</body>
+</html>

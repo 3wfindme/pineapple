@@ -1,0 +1,46 @@
+<include file="Public:_public_header_start"/>
+<include file="Public:_public_header_end"/>
+
+<div class="am-g">
+    <div class="am-t-c am-margin">
+        <h3>查找客户信息</h3>
+        <hr>
+    </div>
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered ">
+        <form method="post" class="am-form" id="doc-vld-msg" action="{:U('Crm/Index/myUser')}">
+            <div class="am-form-group">
+                <label for="username">用户名:</label>
+                <input type="text" name="username" placeholder="可以输入字母或者中文" value="" />
+            </div>
+
+            <!--<div class="am-form-group">-->
+                <!--<label for="phone">手机号码:</label>-->
+                <!--<input type="text" name="phone" placeholder="填写收货人手机号码" value="{$address.phone}" />-->
+            <!--</div>-->
+
+                <div class="am-cf">
+                    <input type="submit" name="" value="查找客户" class="am-btn am-btn-success am-fl am-btn-block">
+                </div>
+                <br/>
+        </form>
+        <hr>
+        <include file="Public/web_info"/>
+    </div>
+</div>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">温馨提示</div>
+        <div class="am-modal-bd" id="msg_info">
+
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="my-user-url" value="{:U('Crm/Index/myUser')}">
+<include file="Public:_public_footer_start"/>
+<script>
+
+</script>
+<include file="Public:_public_footer_end"/>

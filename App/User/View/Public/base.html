@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>{:L('member').L('manage_center')} - {:C('WEB_SITE_TITLE')}</title>
+<link href="{CSS_PATH}reset.css" rel="stylesheet" type="text/css" />
+<link href="{CSS_PATH}member.css" rel="stylesheet" type="text/css" />
+<link href="{CSS_PATH}table_form.css" rel="stylesheet" type="text/css" />
+<link href="__CSS__/reset.css" rel="stylesheet" type="text/css" />
+<link href="__CSS__/table_form.css" rel="stylesheet" type="text/css" />
+<link href="__CSS__/member.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__STATIC__/Jquery/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	$('#code_img').click(function(){
+		$('#code_img').attr('src',"{:U('User/Public/verify')}&time="+new Date())
+	})
+})
+</script>
+</head>
+<body>
+<div id="header">
+	<div class="logo"><a href="{$siteinfo['domain']}"><img src="__IMG__/v9/logo.jpg" height="60" /></a><h3>{:L('member_center')}</h3></div>
+    <div class="link">{:L('hellow')} {$UserInfo['nickname']}<span> | </span>
+	<a href="{:U('Public/logout')}">{:L('logout')}</a>
+	<span> | </span><a href="__APP__">{:L('index')}</a> </div>
+	<div class="nav-bar">
+    	<map>
+        	<ul class="nav-site cu-span">
+				<li><a href="{:U('Index/index')}" <if condition="CONTROLLER_NAME eq 'Index' || CONTROLLER_NAME eq 'Message'"> class="on"</if>><span>管理中心</span></a></li>
+				<li class="line">|</li>
+				<li><a href="{:U('UserInfo/index')}" <if condition="CONTROLLER_NAME eq 'UserInfo'"> class="on"</if>><span>账号管理</span></a></li>
+				<li class="line">|</li>
+            </ul>
+        </map>
+    </div>
+</div>
+
+<block name="body"> </block>
+
+
+<div id="footer">
+<a href="http://guanblog.sinaapp.com/" target="_blank">友情链接</a>
+<p class="cp">Powered by <strong><a href="http://guanblog.sinaapp.com/" target="_blank">Gms管理系统</a></strong> <em>v1.11</em> &copy; {:date('Y')} <img src="__IMG__/copyright.gif"/>
+</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <input type="hidden" name="pid" value="0">
+    <tr>
+        <th>上级分类 :</th>
+        <td>
+            <select name="pid">
+                <option value="0" <if condition="0 eq $info['pid']">selected</if>>顶级分类</option>
+                <volist name="category_list" id="cl">
+                <option value="{$cl.id}" <if condition="$cl['id'] eq $info['pid']">selected</if>  >{$cl.name}</option>
+                    <!--<if condition="cl['children']">-->
+                        <!--<volist name="cl['children']" id="clc">-->
+                            <!--<option value="{$clc.id}">{$clc.name}</option>-->
+                        <!--</volist>-->
+                        <!--</if>-->
+                    </volist>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th>分类名称 :</th>
+        <td><input name="name" type="text" class="easyui-textbox" style="height:30px;" value="{$info.name}"
+                   data-options="required:false"></td>
+    </tr>
+    <tr>
+        <th>显示排序 :</th>
+        <td><input name="list_order" type="text" class="easyui-textbox" style="height:30px;" value="{$info.list_order}"
+                   data-options="required:false"></td>
+    </tr>
+</table>

@@ -1,0 +1,112 @@
+<style type="text/css">
+    .demo{margin:4px auto}
+    .btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;padding:4px 10px 4px;font-size:14px;line-height:18px;*line-height:20px;color:#fff;text-align:center;vertical-align:middle;cursor:pointer;background-color:#5bb75b;border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}
+    .btn input {position: absolute;top: 0; right: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+    .progress { position:relative; margin-left:100px; margin-top:-24px; width:100px;padding: 1px; border-radius:3px; display:none}
+    .bar {background-color: green; display:block; width:0%; height:20px; border-radius: 3px; }
+    .percent { position:absolute; height:20px; display:inline-block; top:3px; left:2%; color:#fff }
+    .files{height:22px; line-height:22px; margin:10px 0}
+    .delimg{margin-left:20px; color:#090; cursor:pointer}
+    .gl-table tr {border-bottom: 1px solid #eee;}
+</style>
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+    <input type="hidden" name="order_id" value="{$info.id}">
+    <tr>
+        <th>订单名称 :</th>
+        <td>{$info.name}</td>
+    </tr>
+    <tr>
+        <th>商品信息 :</th>
+        <td>
+            <table class="gl-table">
+                <volist name="goods_list" id="gl">
+                <tr>
+                    <td style="text-align: left;">{$gl.goods_name}</td>
+                    <td>{$gl.price} 元</td>
+                    <td>x {$gl.count}</td>
+                    <td><php>echo $gl['price']*$gl['count'];</php> 元</td>
+                </tr>
+                    </volist>
+                <tr>
+                    <td colspan="4">商品总价: {$info.price} 元 + 运费: {$info.freight_price} 元 - 优惠: {$info.coupons_price} 元</td>
+                </tr>
+                <tr>
+                    <td colspan="4">支付总价: {$info.pay_price} 元</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th>收货人 :</th>
+        <td>{$info.freight_name}</td>
+    </tr>
+    <tr>
+        <th>收货电话 :</th>
+        <td>{$info.freight_phone}</td>
+    </tr>
+    <tr>
+        <th>收货地址 :</th>
+        <td>{$info.freight_address}</td>
+    </tr>
+    <tr>
+        <th>支付方式 :</th>
+        <td>
+            {$info.pay_type_name}
+        </td>
+    </tr>
+    <tr>
+        <th>下单时间 :</th>
+        <td>{$info.ctime|date="Y-m-d H:i:s", ###}</td>
+    </tr>
+    <if condition="$info['pay_time']">
+        <tr>
+            <th>支付时间 :</th>
+            <td>{$info.pay_time|date="Y-m-d H:i:s", ###}</td>
+        </tr>
+    </if>
+    <if condition="$info['distribution_time']">
+        <tr>
+            <th>发货时间 :</th>
+            <td>{$info.distribution_time|date="Y-m-d H:i:s", ###}</td>
+        </tr>
+    </if>
+    <if condition="$info['take_time']">
+        <tr>
+            <th>收货时间 :</th>
+            <td>{$info.take_time|date="Y-m-d H:i:s", ###}</td>
+        </tr>
+    </if>
+    <if condition="$info['utime']">
+        <tr>
+            <th>最后编辑时间 :</th>
+            <td>{$info.utime|date="Y-m-d H:i:s", ###}</td>
+        </tr>
+    </if>
+    <tr>
+        <th>支付状态 :</th>
+        <td>
+            <input type="radio" name="pay_status" <if condition="$info['pay_status'] eq 0">checked</if> value="0" style="width: auto"> 未支付
+            <input type="radio" name="pay_status" <if condition="$info['pay_status'] eq 1">checked</if> value="1" style="width: auto"> 已支付 [货到付款,此处仅用于货到付款方式修改]
+        </td>
+    </tr>
+
+    <tr>
+        <th>配送状态 :</th>
+        <td>
+            <input type="radio" name="distribution_status" <if condition="$info['distribution_status'] eq 0">checked</if> value="0" style="width: auto"> 未发货
+            <input type="radio" name="distribution_status" <if condition="$info['distribution_status'] eq 1">checked</if> value="1" style="width: auto"> 配送中
+            <input type="radio" name="distribution_status" <if condition="$info['distribution_status'] eq 2">checked</if> value="2" style="width: auto"> 已收货
+        </td>
+    </tr>
+
+    <tr>
+        <th>订单备注 :</th>
+        <td>
+            <textarea name="remark" data-options="required:false" cols="60" rows="6">{$info.remark}</textarea>
+        </td>
+    </tr>
+
+</table>
+<script>
+
+</script>

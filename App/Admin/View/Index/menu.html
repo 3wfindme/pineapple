@@ -1,0 +1,40 @@
+<div class="right_box">
+  <volist id="vo" name="LeftMenu">
+    <dl id="Left_{$vo['id']}_box">
+      <dt><i>{$vo['title']}</i></dt>
+      <dd>
+        <ul>
+          <volist id="vo2" name="vo['children']"> <a href="JavaScript:void(0);" onclick="<if condition="$vo2['show_type'] eq 0 ">LeftMenuClick('{$vo2['name']}','{$vo2['title']}','{$vo2['url']}','{$vo2['icon']}')
+            <else/>
+            LeftMenuClick_IF('{$vo2['name']}','{$vo2['title']}','{$vo2['url']}','{$vo2['icon']}')
+            </if>
+            ">
+            <li><i class="icon iconfont {$vo2['icon']}"></i>{$vo2['title']}</li>
+            </a> </volist>
+        </ul>
+      </dd>
+    </dl>
+  </volist>
+</div>
+<ul class="left_box">
+  <volist id="vo" name="LeftMenu"> <a href="JavaScript:void(0);" id="Left_{$vo['id']}_nav" title="<span style='color:#fff;line-height:38px;'>{$vo['title']}</span>" class="Left_nav" onclick="LeftMenu('{$vo['id']}')">
+    <li><i class="icon iconfont {$vo['icon']}"></i></li>
+    </a> </volist>
+</ul>
+<script>
+$(document).ready(function(){
+$(".left_box li:eq(0)").addClass("selected");
+$(".right_box dl:eq(0)").addClass("selected");
+$('.Left_nav').tooltip({
+	position: 'right',
+	deltaX:-12,
+	deltaY:0,
+	onShow: function(){
+		$(this).tooltip('tip').css({
+			backgroundColor: '#2b394a',
+			borderColor: '#2b394a'
+		});
+	}
+});
+})
+</script>

@@ -1,0 +1,18 @@
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+  <tr>
+    <th>数据表:</th>
+    <td><select class="easyui-combobox" style="height:30px;" name="table" data-options="editable:false">
+        <volist name="tables" id="tb">
+          <option value="{$tb}">{$tb}</option>
+        </volist>
+      </select></td>
+  </tr>
+  <tr>
+    <th>模型标识:</th>
+    <td><input class="easyui-textbox"  style="height:30px;"type="text" name="name" value=""></td>
+  </tr>
+  <tr>
+    <th>模型名称:</th>
+    <td><input class="easyui-textbox" style="height:30px;" type="text" name="title" value=""></td>
+  </tr>
+</table>

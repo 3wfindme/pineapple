@@ -1,0 +1,31 @@
+</head>
+<body>
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 不提供支持。 请 <a
+        href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+    以获得更好的体验！</p>
+<![endif]-->
+<body>
+
+<header class="am-topbar">
+    <h1 class="am-topbar-brand">
+        <a href="{:U('Index/myUser')}">好菜运营系统</a>
+    </h1>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li <php>if(ACTION_NAME == 'myUser'){</php>class="am-active"<php>}</php> ><a href="{:U('Crm/Index/myUser')}">我的客户</a></li>
+            <li <php>if(ACTION_NAME == 'addUser'){</php>class="am-active"<php>}</php> ><a href="{:U('Crm/Index/addUser')}">添加客户</a></li>
+            <li <php>if(ACTION_NAME == 'searchUser'){</php>class="am-active"<php>}</php> ><a href="{:U('Crm/Index/searchUser')}">查询客户</a></li>
+            <li <php>if(ACTION_NAME == 'order'){</php>class="am-active"<php>}</php> ><a href="{:U('Crm/Index/order')}">订单管理</a></li>
+            <li <php>if(ACTION_NAME == 'editPassword'){</php>class="am-active"<php>}</php>><a href="{:U('Crm/User/editPassword')}">修改密码</a></li>
+            <if condition="$user['uid']">
+                <li <php>if(ACTION_NAME == 'logout'){</php>class="am-active"<php>}</php> ><a href="{:U('Crm/User/logout')}">({$user['name']})退出登录</a></li>
+            <else />
+                <li <php>if(ACTION_NAME == 'login'){</php>class="am-active"<php>}</php> ><a href="{:U('Crm/User/login')}">登录</a></li>
+            </if>
+        </ul>
+    </div>
+</header>

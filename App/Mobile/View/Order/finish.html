@@ -1,0 +1,62 @@
+<include file="Public:_public_header_start" />
+<include file="Public:_public_header_end" />
+
+<header data-am-widget="header"
+        class="am-header am-header-haocai">
+    <div class="am-header-left am-header-nav">
+        <a href="/" class="">
+            <i class="am-header-icon am-icon-home"></i>
+        </a>
+    </div>
+
+    <h1 class="am-header-title">
+        下单成功
+    </h1>
+
+    <div class="am-header-right am-header-nav">
+        <a href="{:U('Mobile/User/index')}" class="">
+            <i class="am-header-icon am-icon-user"></i>
+        </a>
+    </div>
+</header>
+<div class="am-g">
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered am-g-fixed ">
+        <div style="color:#1abf85;font-size:10rem;text-align: center;margin-top:-2rem;">
+            <i class="am-icon-check-circle"></i>
+        </div>
+        <div style="text-align: center;font-size:1.25rem;margin-top:-3rem;">
+            <p style="">订单编号: {$Think.get.order_id} 订单金额: <a style="color:#dd514c;">{$order_info.pay_price} 元</a> <br />订单已经生成,请在下方选择付款方式</p>
+        </div>
+        <hr />
+        <div><p>使用在线支付</p></div>
+        <a href="/wxpay/online/jsapi.php??order_id={$order_info.id}&price={$order_info.pay_price}" class="am-btn am-btn-success am-btn-block"><i class="am-icon-weixin"></i> 微信支付</a>
+        <!--<a href="#" class="am-btn am-btn-warning am-btn-block"><i class="am-icon-paypal"></i> 支付宝支付</a>-->
+        <div><p></p></div>
+        <div><p>我想货到付款</p></div>
+        <a href="javascript:;" class="am-btn am-btn-default am-btn-block ship"><i class="am-icon-car"></i> 货到付款,等待配送</a>
+
+
+    </div>
+</div>
+
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">温馨提示</div>
+        <div class="am-modal-bd" id="msg_info">
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+
+<include file="Public/web_info" />
+<include file="Public:_public_footer_start" />
+<script>
+$(".ship").click(function(){
+    $("#msg_info").html('您的订单已经成功提交，请耐心等待配送！');
+    $("#my-alert").modal();
+    redirect('/', 3000);
+});
+</script>
+<include file="Public:_public_footer_end" />

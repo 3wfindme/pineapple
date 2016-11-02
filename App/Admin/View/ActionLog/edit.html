@@ -1,0 +1,27 @@
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+	<tr>
+		<th>行为id : </th>
+		<td><input name="action_id" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["action_id"]}" data-options="required:false"></td>
+	</tr><tr>
+		<th>执行用户id : </th>
+		<td><input name="user_id" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["user_id"]}" data-options="required:false"></td>
+	</tr><tr>
+		<th>执行行为者ip : </th>
+		<td><input name="action_ip" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["action_ip"]}" data-options="required:false"></td>
+	</tr><tr>
+		<th>触发行为的表 : </th>
+		<td><input name="model" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["model"]}" data-options="required:false"></td>
+	</tr><tr>
+		<th>触发行为的数据id : </th>
+		<td><input name="record_id" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["record_id"]}" data-options="required:false"></td>
+	</tr><tr>
+		<th>日志备注 : </th>
+		<td><input name="remark" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["remark"]}" data-options="required:false"></td>
+	</tr><tr>
+		<th>状态 : </th>
+		<td><input name="status" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["status"]}" data-options="required:false"></td>
+	</tr><tr>
+		<th>执行行为的时间 : </th>
+		<td><input name="create_time" type="text" class="easyui-textbox" style="height:30px;" value="{$_info["create_time"]}" data-options="required:false"></td>
+	</tr></table>
+<input name="id" type="hidden" value="{:I('get.id')}" />

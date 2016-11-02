@@ -1,0 +1,68 @@
+<div id="Category_Bar" class="Bar_tools">
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-viewlist',plain:true"
+       onclick="Data_Reload('Category_Data_List');"><span>列表or刷新</span></a>
+    <if condition="Is_Auth('Admin/Goods/addCategory')">
+        <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-add',plain:true"
+           onclick="Submit_Form('Category_Form','Category_Data_List','{:U('addCategory')}','','新增分类','');"><span>新增分类</span></a>
+    </if>
+</div>
+<div style="display: none">
+    <form id="Category_Form" class="update_from" style="width:600px; height:320px;"></form>
+    </form>
+    <form id="User_Search_From" class="search_from">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tr>
+                <th>上级分类 :</th>
+                <td>
+                    <select name="s_category">
+                        <option value="0">顶级分类</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>分类名称 :</th>
+                <td><input name="s_name" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>昵称/姓名 :</th>
+                <td><input name="s_nickname" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>备注 :</th>
+                <td><input name="s_remark" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>状态 :</th>
+                <td><select name="s_status" class="easyui-combobox" style="height:30px;"
+                            data-options="value:'',url:'{:U(" Admin/Function/get_config")}&cname=USER_STATUS_TYPE|type|title&r_type=json',valueField:'type',textField:'title',multiple:false,required:false,editable:false"></select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<table id="Category_Data_List">
+
+</table>
+
+<script type="text/javascript">
+    $(function () {
+        $("#Category_Data_List").treegrid({
+            url: "{:U('Goods/category')}",
+            fit : true,
+            striped : true,
+            border : false,
+            idField:'id',
+            treeField:'name',
+            pagination : false,
+            toolbar : '#AuthRule_Bar',
+            singleSelect : true,
+            columns: [[
+                {field: 'id', title: 'ID', width: 100, sortable: true},
+                {field: 'name', title: '名称', width: 200, sortable: true},
+                {field: 'list_order', title: '排序', width: 300, sortable: true},
+                {field: 'operate', title: '操作', width: 300}
+            ]]
+        });
+    })
+</script>

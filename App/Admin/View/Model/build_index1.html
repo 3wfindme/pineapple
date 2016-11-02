@@ -1,0 +1,32 @@
+<div id="{$ModelInfo['name']}_Bar" class="Bar_tools">
+<a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-viewlist',plain:true" onclick="Data_Reload('{$ModelInfo['name']}_Data_List');"><span>列表or刷新</span></a>
+<literal><if condition="Is_Auth('Admin/</literal>{$ModelInfo['name']}<literal>/add')">
+<a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-add',plain:true" onclick="Submit_Form('</literal>{$ModelInfo['name']}<literal>_Form','</literal>{$ModelInfo['name']}<literal>_Data_List','{:U('add')}','','新增数据','');"><span>新增</span></a>
+</if></literal>
+</div>
+<div style="display: none">
+<form id="{$ModelInfo['name']}_Form" class="update_from" style="width:600px; height:320px;"></form>
+</div>
+<table id="{$ModelInfo['name']}_Data_List"></table>
+<script type="text/javascript">
+$(function() {
+	$("#{$ModelInfo['name']}_Data_List").treegrid({
+		url : "<literal>{:U('</literal>{$ModelInfo['name']}<literal>/index')}</literal>",
+		fit : true,
+		striped : true,
+		border : false,
+		idField:'id',
+		treeField:'title',
+		pagination : false,
+		toolbar : '#{$ModelInfo["name"]}_Bar',
+		singleSelect : true,
+		columns : [[
+            {field : 'id',title : 'ID',width : 40},
+<?php foreach ($_List as $key => $field_one ) {?>
+            {field : '<?php echo $field_one["name"];?>',title : '<?php echo $field_one["title"];?>',width : <?php if($field_one["l_width"]!=''){echo $field_one["l_width"];}else{echo "100";}?>},
+<?php }?>
+			{field : 'operate',title : '操作',width : 200}
+		]],
+	});
+})
+</script>

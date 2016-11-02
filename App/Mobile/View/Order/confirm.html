@@ -1,0 +1,200 @@
+<include file="Public:_public_header_start"/>
+<include file="Public:_public_header_end"/>
+
+<header data-am-widget="header"
+        class="am-header am-header-haocai">
+    <div class="am-header-left am-header-nav">
+        <a href="/" class="">
+            <i class="am-header-icon am-icon-home"></i>
+        </a>
+    </div>
+
+    <h1 class="am-header-title">
+        提交订单
+    </h1>
+
+    <div class="am-header-right am-header-nav">
+        <a href="{:U('Mobile/User/index')}" class="">
+            <i class="am-header-icon am-icon-user"></i>
+        </a>
+    </div>
+</header>
+<div class="am-g">
+    <div class="am-t-c am-margin">
+    </div>
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered am-g-fixed ">
+        <form method="post" class="am-form" id="doc-vld-msg">
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd"><h3 class="am-panel-title">收货信息</h3></div>
+                <div class="am-panel-bd">
+                    {$user_address.name}&nbsp;&nbsp;&nbsp;&nbsp;{$user_address.phone} <br/>
+                    地址: {$user_address.address}
+                </div>
+            </div>
+            <!--<div class="am-panel am-panel-default">-->
+                <!--<div class="am-panel-hd"><h3 class="am-panel-title">选择支付方式</h3></div>-->
+                <!--<div class="am-panel-bd">-->
+                    <!--<ul class="am-pay-type">-->
+                        <!--<li class="am-pay-type-hr am-active" val="1">-->
+                            <!--<span>货到付款</span>-->
+
+                            <!--<div class=""></div>-->
+                        <!--</li>-->
+                        <!--<li class="" val="2">-->
+                            <!--<span>微信/支付宝支付</span>-->
+
+                            <!--<div></div>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd"><h3 class="am-panel-title">优惠券</h3></div>
+                <div class="am-panel-bd">
+                    <if condition="$user_coupons">
+                    <ul class="am-pay-type" id="coupons-list">
+                        <volist name="user_coupons" id="uc" key="k">
+                        <li class="am-pay-type-hr " val="{$uc.id}" price="{$uc.price}" meet_price="{$uc.meet_price}">
+                            <span>{$uc.name}</span>
+                            <div class=""></div>
+                        </li>
+                        </volist>
+                    </ul>
+                    <!--<button type="button" class="am-btn am-btn-default am-btn-block am-btn-xs am-margin-top-md" id="more-coupons">更多优惠 >></button>-->
+                        <else />
+                        没有优惠券可用
+                        </if>
+                </div>
+            </div>
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-hd"><h3 class="am-panel-title">商品列表</h3></div>
+                <div class="am-panel-bd">
+                    <table style="width: 100%;" id="goods_list">
+
+                    </table>
+                </div>
+            </div>
+            <div class="am-cf">
+                <input type="submit" name="" id="sub_order" value="确认下单"
+                       class="am-btn am-btn-danger am-fl am-btn-block">
+            </div>
+        </form>
+        <hr>
+    </div>
+</div>
+<input type="hidden" id="user_login_url" value="{:U('Mobile/User/index')}">
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">温馨提示</div>
+        <div class="am-modal-bd" id="msg_info">
+
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="load_goods_list" value="{:U('Mobile/Index/loadCartGoodsList')}">
+<input type="hidden" id="sub_order_url" value="{:U('Mobile/Order/saveOrder')}">
+<input type="hidden" id="pay_type" value="1">
+<input type="hidden" id="freight_price" value="{$freight_price}">
+<input type="hidden" id="user_coupons_id" value="0">
+<if condition="$user_coupons[0]['price']">
+<input type="hidden" id="coupons_price" value="{$user_coupons[0]['price']}">
+    <else />
+    <input type="hidden" id="coupons_price" value="0">
+</if>
+<include file="Public/web_info"/>
+<include file="Public:_public_footer_start"/>
+<script>
+    var cart_goods = getCartLocalGoods();
+    var goods_price = 0;
+
+    var freight_price = $("#freight_price").val();
+    if (cart_goods) {
+        var str = '';
+        for (var i = 0; i < cart_goods.length; i++) {
+            str += cart_goods[i].goods_id + ':' + cart_goods[i].nums + '-';
+        }
+        $.post($("#load_goods_list").val(), {goods_list: str}, function (o) {
+            if (o.status) {
+                var str = '';
+                var total_price = 0;
+                var coupons_price = $("#coupons_price").val();
+                for (var i = 0; i < o.data.length; i++) {
+                    str += '<tr style="height: 2.6rem;line-height: 2.6rem;">' +
+                            '<td style="width: 60%;font-size:1.3rem;">' + o.data[i].goods_info.name + '</td>' +
+                            '<td style="width: 10%;font-size:1.3rem;">x ' + o.data[i].nums + '</td>' +
+                            '<td style="width: 30%;text-align: right;color:#dd514c;font-size:1.3rem;">' + accMul(o.data[i].goods_info.price, o.data[i].nums) + '元</td>' +
+                            '</tr>';
+                    total_price = accAdd(total_price, accMul(o.data[i].goods_info.price, o.data[i].nums));
+                }
+                str += '<tr style="border-top:1px solid #eee;height: 4rem;">' +
+                        '<td style="width: 60%;font-size:1.4rem;text-align: right" colspan="3">商品总价: <a style="color:#dd514c;">' + total_price + '元</a> + 运费: <a style="color:#dd514c;">'+ freight_price +'元</a> - 优惠券: <a style="color:#dd514c;" id="coupons">'+ 0 +'元</a> </a></td>' +
+                        '</tr>';
+                goods_price = accAdd(total_price, freight_price);
+                total_price = goods_price;
+//                if(accSub(goods_price, coupons_price) > 0) {
+//                    total_price = accSub(goods_price, coupons_price);
+//                }
+
+                str += '<tr style="height: 1rem;">' +
+                        '<td style="width: 60%;font-size:1.6rem;text-align: right" colspan="3">总价: <a style="color:#dd514c;" id="total_price">' + total_price + '元</a></td>' +
+                        '</tr>';
+                $("#goods_list").html(str);
+            }
+        }, 'json');
+    }
+
+    /* 提交订单 */
+    $("#sub_order").click(function () {
+        var cart_goods = getCartLocalGoods();
+        if (cart_goods) {
+            var str = '';
+            var pay_type = $("#pay_type").val();
+            var user_coupons_id = $("#user_coupons_id").val();
+            for (var i = 0; i < cart_goods.length; i++) {
+                str += cart_goods[i].goods_id + ':' + cart_goods[i].nums + '-';
+            }
+            $.post($("#sub_order_url").val(), {
+                goods_list: str,
+                user_coupons_id: user_coupons_id,
+                pay_type: pay_type
+            }, function (o) {
+                if (o.status) {
+                    localStorage.clear();
+                    redirect(o.url, 0);
+                } else {
+                    $("#msg_info").html(o.msg);
+                    $("#my-alert").modal();
+//                        redirect($("#user_login_url").val(), 1500);
+                }
+            });
+        }
+        return false;
+    });
+
+    /* 点击选择支付方式 */
+    $(".am-pay-type li").click(function () {
+        var price = parseFloat($(this).attr('price'));
+        var meet_price = parseFloat($(this).attr('meet_price'));
+        if(goods_price > meet_price){
+            //更新价格
+            $("#coupons").html(price+'元');
+            $("#total_price").html(accSub(goods_price, price) + '元');
+            $(this).addClass('am-active');
+            $(this).siblings().removeClass('am-active');
+            $("#user_coupons_id").val($(this).attr('val'));
+        }else{
+            $("#msg_info").html('您的支付价格未满足优惠券最低使用价格限制!');
+            $("#my-alert").modal();
+        }
+    });
+
+    /* 展开更多优惠券 */
+    $("#more-coupons").click(function(){
+        $("#coupons-list").children().removeClass('am-none');
+    });
+
+</script>
+<include file="Public:_public_footer_end"/>

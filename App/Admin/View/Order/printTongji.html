@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打印统计订单</title>
+    <style>
+        body {
+            width:800px;
+            margin:0 auto;
+        }
+        .list table {
+            margin-top:20px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .list .th td  {
+            font-weight: bold;
+        }
+        .list table td{
+            border:1px solid #eee;
+            padding:4px;
+        }
+        .print a {
+            display: block;
+            padding: 10px 20px;
+            background: #1abf85;
+            color:#fff;
+            text-decoration: none;
+        }
+        .print a:hover {
+            background: #1ABF63;
+        }
+    </style>
+</head>
+<body>
+<h1></h1>
+<form id="Tongji_Search_From" class="search_from" action="{:U('Admin/Order/printTongji')}" method="post">
+    <table border="0" cellpadding="0" cellspacing="0" style="width:100%" style="margin-top: 20px;">
+        <tr>
+            <td>下单日期 :
+                <input name="ctime_begin" type="text" class="easyui-textbox" style="height:30px;" value="{$begin_time}"> - <input name="ctime_end" type="text" class="easyui-textbox" style="height:30px;" value="{$end_time}">
+                请输入例如: 2015-01-01 8:00:00 格式. 默认是今天.<br /><br />
+                <input type="submit" name="sub" value="搜索查询">
+            </td>
+        </tr>
+    </table>
+</form>
+<div class="list">
+<table width="100%" cellspacing="0" cellpadding="0" border="1" >
+    <tr style="background: #eee;" class="th">
+        <td style="height: 40px;">编号</td>
+        <td>商品名称</td>
+        <td>单价</td>
+        <td>总数</td>
+        <td>单位</td>
+        <td>总价</td>
+    </tr>
+    <volist name="list" id="l">
+    <tr>
+        <td>{$l.id}</td>
+        <td>{$l.name}</td>
+        <td>{$l.price}</td>
+        <td>{$l.count}</td>
+        <td>{$l.init}</td>
+        <td>{$l.total_price}</td>
+    </tr>
+        </volist>
+    <tr>
+        <td colspan="6" style="text-align: right">
+            总数量: {$total_count} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            总价格: {$total_price} 元
+        </td>
+    </tr>
+</table>
+    </div>
+<p class="print" style="text-align: center;">
+    <a href="javascript:window.print();">立即打印</a>
+</p>
+</body>
+</html>

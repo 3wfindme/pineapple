@@ -1,0 +1,50 @@
+<div id="Tongji_Bar" class="Bar_tools">
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-viewlist',plain:true" onclick="Data_Reload('Tongji_Data_List');"><span>列表or刷新</span></a>
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-search',plain:true" onclick="Data_Search('Tongji_Search_From','Tongji_Data_List');"><span>搜索</span></a>
+    <a class='easyui-linkbutton' href='{:U('printTongji')}' target="_blank" data-options="iconCls:'iconfont icon-print',plain:true" ><span>打印全部</span></a>
+</div>
+<div style="display: none">
+    <form id="Tongji_Form" class="update_from" style="width:600px; height:500px;"></form>
+    </form>
+    <form id="Tongji_Search_From" class="search_from">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tr>
+                <th>下单日期 :</th>
+                <td>
+                    <input name="ctime_begin" type="text" class="easyui-textbox" style="height:30px;"> - <input name="ctime_end" type="text" class="easyui-textbox" style="height:30px;">
+                    请输入例如: 2015-01-01 8:00:00格式. 默认是今天
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<table id="Tongji_Data_List"></table>
+
+<script type="text/javascript">
+    $(function() {
+        $("#Tongji_Data_List").datagrid({
+            url : "{:U('Order/tongji')}",
+            fit : true,
+            striped : true,
+            border : false,
+            pagination : true,
+            pageSize : 20,
+            pageList : [ 10, 20, 50 ],
+            pageNumber : 1,
+            sortName : 'list_order',
+            sortOrder : 'ASC',
+            toolbar : '#Tongji_Bar',
+            singleSelect : true,
+            columns : [[
+                {field : 'id',title : 'ID',width : 40,sortable:true},
+                {field : 'name',title : '商品名称',width : 150,sortable:true},
+                {field : 'cname',title : '所属分类',width : 100,sortable:true},
+                {field : 'price',title : '价格',width : 80,sortable:true},
+                {field : 'count',title : '总数',width : 200,sortable:true},
+                {field : 'init',title : '单位',width : 40,sortable:true},
+                {field : 'total_price',title : '总价格',width : 200,sortable:true},
+            ]]
+        });
+    })
+</script>

@@ -1,0 +1,22 @@
+<div class="col-left col-1 left-memu">
+  <h5 class="title"><img src="__IMG__/icon/m_1.png" width="15" height="15" /> {:L('manage_center')}</h5>
+  <ul>
+    <li <if condition="CONTROLLER_NAME eq 'Index' && ACTION_NAME eq 'index'"> class="on"</if>><a href="{:U('User/Index/index')}"><img src="__IMG__/icon/colour.png" width="14" height="15" /> {:L('collect')}</a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Content' && ACTION_NAME eq 'add'"> class="on"</if>><a href="{:U('User/Content/add')}"><img src="__IMG__/icon/m_2.png" width="14" height="15" /> {:L('online_publish')}</a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Content' && ACTION_NAME eq 'index'"> class="on"</if>><a href="{:U('User/Content/index')}"><img src="__IMG__/icon/m_3.png" width="14" height="16" /> {:L('published_content')}</a></li>
+  </ul>
+  <h6 class="title">{:L('financial_management')}</h6>
+  <ul>
+    <li <if condition="CONTROLLER_NAME eq 'Pay' && ACTION_NAME eq 'pay'"> class="on"</if>><a href="{:U('User/Pay/pay')}"><img src="__IMG__/icon/m_4.png" width="15" height="16" /> {:L('online_charge')}</a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Pay' && ACTION_NAME eq 'deposit'"> class="on"</if>><a href="{:U('User/Pay/deposit')}"><img src="__IMG__/icon/m_8.png" width="16" height="16" /> {:L('pay_log')}</a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Pay' && ACTION_NAME eq 'spend_list'"> class="on"</if>><a href="{:U('User/Pay/spend_list')}"><img src="__IMG__/icon/table-information.png" width="16" height="16" /> {:L('cost_log')}</a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Pay' && ACTION_NAME eq 'change_credit'"> class="on"</if>><a href="{:U('User/Pay/change_credit')}"><img src="__IMG__/icon/coins_add.png" width="16" height="16" /> {:L('credit_change')}</a></li>
+  </ul>
+  <h6 class="title">{:L('message')}</h6>
+  <ul>
+    <li <if condition="CONTROLLER_NAME eq 'Message' && ACTION_NAME eq 'send'"> class="on"</if>"><a href="{:U('User/Message/send')}"><img src="__IMG__/icon/m_9.png" width="16" height="14" /> {:L('send_message')}</a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Message' && ACTION_NAME eq 'inbox'"> class="on"</if>"><a href="{:U('User/Message/inbox')}"><img src="__IMG__/icon/m_11.png" width="16" height="16" /> {:L('input_box')}<font color=red>(1)</font></a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Message' && ACTION_NAME eq 'outbox'"> class="on"</if>"><a href="{:U('User/Message/outbox')}"><img src="__IMG__/icon/m_10.png" width="16" height="16" /> {:L('output_box')}</a></li>
+    <li <if condition="CONTROLLER_NAME eq 'Message' && ACTION_NAME eq 'group'"> class="on"</if>"><a href="{:U('User/Message/group')}"><img src="__IMG__/icon/lightbulb.png" width="16" height="16" /> {:L('system_message')}<font color=red>(1)</font></a></li>
+  </ul>
+  <span class="o1"></span><span class="o2"></span><span class="o3"></span><span class="o4"></span> </div>

@@ -1,0 +1,7 @@
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+  <tr>
+    <th>用户权限 : </th>
+    <td><select name="group[]" class="easyui-combotree" style="height:30px;" data-options="value:'{$_group_id}',url:'{:U("Admin/Function/get_auth_group")}&r_type=json',valueField:'id',textField:'text',multiple:true,cascadeCheck:false,required:false,editable:false"></select></td>
+  </tr>
+</table>
+<input name="id" type="hidden" value="{$_info.id}" />

@@ -1,0 +1,84 @@
+<include file="Public:_public_header_start" />
+<include file="Public:_public_header_end" />
+
+<div class="am-g">
+    <div class="am-t-c am-margin">
+        <h3>老用户登录</h3>
+        <hr>
+    </div>
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered ">
+        <form method="post" class="am-form" id="doc-vld-msg" action="{:U('Mobile/User/doLogin')}">
+            <div class="am-form-group">
+                <label for="username">用户名:</label>
+                <input type="text" name="username" id="username" placeholder="请输入用户名" minlength="2" maxlength="50"
+                       value="" required/>
+            </div>
+            <div class="am-form-group">
+                <label for="password">密码:</label>
+                <input type="password" name="password" placeholder="请输入密码" minlength="6" maxlength="16" id="password"
+                       value="" required/>
+            </div>
+            <div class="am-form-group">
+                <div class="am-cf">
+                    <input type="submit" name="" value="登 录"
+                           class="am-btn am-btn-success am-btn-warning am-fl am-btn-block">
+                </div>
+            </div>
+            <div class="am-cf">
+                <a href="{:U('Mobile/User/register')}" class="am-btn  am-btn-warning am-fl am-btn-block">还没有帐号? 立即注册</a>
+            </div>
+        </form>
+        <hr>
+        <include file="Public/web_info" />
+    </div>
+</div>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">温馨提示</div>
+        <div class="am-modal-bd" id="msg_info">
+
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+<include file="Public:_public_footer_start" />
+<script>
+        //整体表单验证
+        $('#doc-vld-msg').validator({
+            keyboardEvents: 'focusout',
+            onValid: function(validity) {
+                $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+            },
+
+            onInValid: function(validity) {
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-form-group');
+                var $alert = $group.find('.am-alert');
+                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if (!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+                    appendTo($group);
+                }
+
+                $alert.html(msg).show();
+            },
+            submit: function(){
+                var formValidity = this.isFormValid();
+                if(formValidity) {
+                    $.post($("#doc-vld-msg").attr('action'), $("#doc-vld-msg").serialize(), function (o) {
+                        $("#msg_info").html(o.msg);
+                        $("#my-alert").modal();
+                        if (o.status) {
+                            redirect('/', 1500);
+                        }
+                    }, 'json');
+                }
+                return false;
+            }
+        });
+</script>
+<include file="Public:_public_footer_end" />

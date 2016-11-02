@@ -1,0 +1,114 @@
+<include file="Public:_public_header_start"/>
+<include file="Public:_public_header_end"/>
+
+<div class="am-g">
+    <div class="am-t-c am-margin">
+        <h3>编辑客户信息</h3>
+        <hr>
+    </div>
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered ">
+        <form method="post" class="am-form" id="doc-vld-msg" action="{:U('Crm/Index/editUser')}">
+            <input type="hidden" name="uid" value="{$info.id}">
+            <div class="am-form-group">
+                <label for="username">用户名:</label>
+                {$info.username}
+            </div>
+            <!--<div class="am-form-group">-->
+                <!--<label for="password">修改密码:</label>-->
+                <!--<input type="password" name="password" id="password"-->
+                       <!--placeholder="输入6~16长度的数字/英文字母大小写" value="" />-->
+            <!--</div>-->
+            <!--<div class="am-form-group">-->
+                <!--<label for="real_name">收货人:</label>-->
+                <!--<input type="text" name="real_name" id="real_name" minlength="2" maxlength="50" placeholder="填写收货人真实姓名"-->
+                       <!--value="{$address.name}" required/>-->
+            <!--</div>-->
+            <div class="am-form-group">
+                <label for="phone">手机号码:</label>
+                {$info.phone}
+            </div>
+            <div class="am-form-group">
+                <label for="address">收货地址:</label>
+                {$info.address}
+            </div>
+            <div class="am-form-group">
+                <label for="address">门店类型:</label>
+                {$info.stores_type}
+            </div>
+            <div class="am-form-group">
+                <label for="address">开发时间:</label>
+                {$info.ctime|date="Y-m-d H:i:s", ###}
+            </div>
+            <div class="am-form-group">
+                <label for="address">今日下单总斤数:</label>
+                {$info.all_count} 斤
+            </div>
+            <div class="am-form-group">
+                <div class="am-cf">
+                    <!--<a href="{:U('')}" class="am-btn am-btn-success am-fl am-btn-block">查看订单</a>-->
+                    <!--<a href="" class="am-btn am-btn-default am-fl am-btn-block">删除客户</a>-->
+                </div>
+                <br/>
+        </form>
+        <input type="hidden" id="validate_username" value="{:U('Mobile/User/validateUsername')}">
+        <hr>
+        <include file="Public/web_info"/>
+    </div>
+</div>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">温馨提示</div>
+        <div class="am-modal-bd" id="msg_info">
+
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="my-user-url" value="{:U('Crm/Index/myUser')}">
+<include file="Public:_public_footer_start"/>
+<script>
+    //整体表单验证
+    $('#doc-vld-msg').validator({
+        keyboardEvents: 'focusout',
+        onValid: function (validity) {
+            $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+        },
+
+        onInValid: function (validity) {
+            var $field = $(validity.field);
+            var $group = $field.closest('.am-form-group');
+            var $alert = $group.find('.am-alert');
+            // 使用自定义的提示信息 或 插件内置的提示信息
+            var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+            if (!$alert.length) {
+                $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+                appendTo($group);
+            }
+
+            $alert.html(msg).show();
+        },
+
+        validate: function (validity) {
+
+        },
+
+        submit: function () {
+            var formValidity = this.isFormValid();
+            if (formValidity) {
+                $.post($("#doc-vld-msg").attr('action'), $("#doc-vld-msg").serialize(), function (o) {
+                    $("#msg_info").html(o.msg);
+                    $("#my-alert").modal();
+                    if (o.status) {
+                        redirect($("#my-user-url").val(), 1500);
+                    }
+                }, 'json');
+            }
+
+            return false;
+        }
+    });
+</script>
+<include file="Public:_public_footer_end"/>

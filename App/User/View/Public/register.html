@@ -1,0 +1,28 @@
+<extend name="Public/public_base"/>
+<block name="body">
+<div id="content">
+<h2>会员注册</h2>
+<div class="col-right form-login form-reg" style="margin:0px; width:300px;">
+    <div class="col-auto reg-auto">
+    	<p class="f14">
+        已经有了账号？<br/>请直接登录
+        </p>
+        <div class="submit"><input type="submit" name="dosubmit" value="登录" onclick="redirect('{:U('Public/login')}')"></div>
+    </div>
+</div>
+<form method="post" action="{:U('')}" id="myform">
+	<div class="col-left form-login form-reg">
+    	<div class="input"><label>用户名：</label><input type="text" id="username" name="username" size="36" class="input-text"></div>
+        <div class="input"><label>密码：</label><input type="password" id="password" name="password" size="36" class="input-text"></div>
+        <div class="input"><label>重复密码：</label><input type="password" name="password2" id="password2" size="36" class="input-text"></div>
+        <div class="input"><label>邮箱：</label><input type="text" id="email" name="email" size="36" class="input-text"></div>
+		<div class="input"><label>用户昵称：</label><input type="text" id="nickname" name="nickname" size="36" class="input-text"></div>
+		<div class="input"><label>验证码：</label><input type="text" id="verify" name="verify" size="10" class="input-text"><img src="{:U('Public/verify')}" style=" width:120px; height:26px;"></div>
+		<div class="reg">
+			<div class="submit"><input type="submit" name="dosubmit" value="提交注册"></div>
+		</div>
+	</div>
+</form>
+<div style="clear:both"></div>
+</div>
+</block>

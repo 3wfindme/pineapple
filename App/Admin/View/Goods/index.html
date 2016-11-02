@@ -1,0 +1,74 @@
+<div id="Goods_Bar" class="Bar_tools">
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-viewlist',plain:true" onclick="Data_Reload('Goods_Data_List');"><span>列表or刷新</span></a>
+    <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-search',plain:true" onclick="Data_Search('Goods_Search_From','Goods_Data_List');"><span>搜索</span></a>
+    <if condition="Is_Auth('Admin/Goods/add')">
+        <a class='easyui-linkbutton' href='JavaScript:void(0);' data-options="iconCls:'iconfont icon-add',plain:true" onclick="Submit_Form('Goods_Form','Goods_Data_List','{:U('add')}','','新增商品','');"><span>新增</span></a>
+    </if>
+</div>
+<div style="display: none">
+    <form id="Goods_Form" class="update_from" style="width:600px; height:500px;"></form>
+    </form>
+    <form id="Goods_Search_From" class="search_from">
+        <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+            <tr>
+                <th>商品名称 :</th>
+                <td><input name="s_name" type="text" class="easyui-textbox" style="height:30px;"></td>
+            </tr>
+            <tr>
+                <th>所属分类 :</th>
+                <td>
+                    <select name="s_cid">
+                        <option value="">全部</option>
+                        <volist name="category_list" id="cl">
+                        <option value="{$cl.id}">{$cl.name}</option>
+                            </volist>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>状态 :</th>
+                <td><select name="s_status" class="easyui-combobox" style="height:30px;">
+                    <option value="">全部</option>
+                    <option value="1">上架</option>
+                    <option value="0">下架</option>
+                </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<table id="Goods_Data_List"></table>
+
+<script type="text/javascript">
+    $(function() {
+        $("#Goods_Data_List").datagrid({
+            url : "{:U('Goods/index')}",
+            fit : true,
+            striped : true,
+            border : false,
+            pagination : true,
+            pageSize : 20,
+            pageList : [ 10, 20, 50 ],
+            pageNumber : 1,
+            sortName : 'list_order',
+            sortOrder : 'ASC',
+            toolbar : '#Goods_Bar',
+            singleSelect : true,
+            columns : [[
+                {field : 'id',title : 'ID',width : 40,sortable:true},
+                {field : 'name',title : '商品名称',width : 150,sortable:true},
+                {field : 'cname',title : '所属分类',width : 100,sortable:true},
+                {field : 'price',title : '价格',width : 80,sortable:true},
+                {field : 'init',title : '单位',width : 40,sortable:true},
+                {field : 'intro',title : '简介',width : 150,sortable:true},
+                {field : 'ctime',title : '创建时间',width : 150,sortable:true},
+                {field : 'utime',title : '更新时间',width : 150,sortable:true},
+                {field : 'list_order',title : '排序',width : 40,sortable:true},
+                {field : 'status_name',title : '状态',width : 40,sortable:true},
+                {field : 'operate',title : '操作',width : 100}
+            ]]
+        });
+    })
+</script>

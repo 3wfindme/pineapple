@@ -1,0 +1,23 @@
+<div class="left_box_2">
+  <volist id="vo" name="LeftMenu">
+    <dl id="Left_{$vo['id']}_box">
+      <dt><a href="JavaScript:void(0);" onclick="LeftMenuClick2('{$vo['id']}')"><i class="icon iconfont {$vo['icon']}"></i><i>{$vo['title']}</i></a></dt>
+      <dd >
+        <ul>
+          <volist id="vo2" name="vo['children']"> <a href="JavaScript:void(0);" onclick="<if condition="$vo2['show_type'] eq 0 ">LeftMenuClick('{$vo2['name']}','{$vo2['title']}','{$vo2['url']}','{$vo2['icon']}')
+            <else/>
+            LeftMenuClick_IF('{$vo2['name']}','{$vo2['title']}','{$vo2['url']}','{$vo2['icon']}')
+            </if>
+            ">
+            <li><i class="icon iconfont {$vo2['icon']}"></i>{$vo2['title']}</li>
+            </a> </volist>
+        </ul>
+      </dd>
+    </dl>
+  </volist>
+</div>
+<script>
+$(document).ready(function(){
+	$(".left_box_2 dl:eq(0) dd").show();
+})
+</script>
